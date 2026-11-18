@@ -1,167 +1,453 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#111827"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Trivia Tracker"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><title>Trivia Tracker</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#111827"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Trivia Tracker"><meta name="application-name" content="Trivia Tracker"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="icon" href="icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="apple-touch-icon.png"><title>Trivia Tracker</title>
 <style>
-:root{color-scheme:dark;--bg:#0c111b;--panel:#171f2e;--panel2:#202b3c;--text:#f4f7fb;--muted:#9aabc0;--green:#27c475;--red:#f05b62;--blue:#62a9ff;--line:#2b394b;--radius:20px}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#111827 0%,var(--bg) 48%);color:var(--text);font:16px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}button:disabled{opacity:.4;cursor:not-allowed}.app{max-width:520px;margin:0 auto;padding:18px 0 36px}.header{display:flex;align-items:center;gap:12px;margin:6px 2px 22px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#2b86ff,#1647aa);display:grid;place-items:center;font-size:26px}.header h1{font-size:21px;line-height:1.1;margin:0;font-weight:800}.header p{margin:4px 0 0;color:var(--muted);font-size:13px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px #0002}.eyebrow{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700}.daily{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.stat{background:var(--panel2);border-radius:15px;padding:14px}.stat strong{font-size:28px;display:block;line-height:1.2}.stat span{font-size:12px;color:var(--muted)}.primary{background:var(--blue);color:#071323;border-radius:16px;font-weight:800;padding:16px;width:100%;font-size:16px}.secondary{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px;font-weight:700}.muted-btn{color:var(--muted);background:transparent;padding:10px}.row{display:flex;gap:10px;align-items:center}.section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:16px;margin:0}.section-title small{color:var(--muted)}.video-card{padding:14px;background:var(--panel2);border-radius:16px;margin:10px 0}.video-title{font-weight:700;overflow-wrap:anywhere}.meta{font-size:13px;color:var(--muted);margin-top:5px}.pill{font-size:12px;padding:5px 9px;border-radius:99px;background:#23344a;color:#b6d5ff;font-weight:700;white-space:nowrap}.pill.done{background:#173c2e;color:#8ee6b9}.empty{color:var(--muted);text-align:center;padding:24px 8px}.screen{display:none}.screen.active{display:block}.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.back{background:transparent;color:var(--muted);padding:8px 0}.progress-track{height:9px;background:#293446;border-radius:9px;overflow:hidden;margin:12px 0 20px}.progress-fill{height:100%;background:var(--blue);width:0;transition:width .2s}.big-number{text-align:center;font-size:42px;font-weight:900;margin:6px 0}.sub{text-align:center;color:var(--muted);margin-bottom:18px}.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.answer{min-height:116px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{font-size:34px}.correct{background:linear-gradient(150deg,#1e9d61,#147244)}.wrong{background:linear-gradient(150deg,#d64b53,#9d3238)}.finish{width:100%;margin-top:16px}.form-field{margin:15px 0}.form-field label{display:block;font-weight:700;margin-bottom:7px}.form-field input,.form-field select{width:100%;background:#0f1724;border:1px solid var(--line);border-radius:13px;padding:14px;color:white;outline:none}.dialog{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:10}.dialog.open{display:flex}.sheet{background:#171f2e;border:1px solid var(--line);border-radius:24px;padding:22px;width:min(520px,100%);box-shadow:0 20px 60px #0008}.sheet h2{margin:0 0 6px}.sheet p{color:var(--muted);margin:0 0 10px}.summary-score{font-size:46px;font-weight:900;text-align:center;margin:8px}.summary-pct{text-align:center;color:var(--green);font-weight:800;font-size:18px}.summary-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.summary-stats .stat{text-align:center}.summary-stats .stat strong{font-size:25px}.history-row{display:flex;justify-content:space-between;gap:12px;align-items:center}.history-score{font-weight:800;text-align:right}.history-score small{display:block;color:var(--muted);font-weight:500}.navfoot{text-align:center;color:var(--muted);font-size:12px;padding:15px 0}.danger-link{background:transparent;color:#f07b80;padding:10px}.scoreline{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.scoreline:last-child{border:0}.notice{color:#b6d5ff;background:#172a42;padding:12px;border-radius:12px;font-size:13px;margin:12px 0}@media(min-width:520px){body{padding:20px}.app{padding-top:8px}}
-</style></head><body><main class="app"><header class="header"><div class="logo">❓</div><div><h1>Trivia Tracker</h1><p>Your personal trivia scorebook</p></div></header>
-<section id="home" class="screen active"><div class="panel"><div class="eyebrow" id="dateLabel">TODAY</div><div class="daily"><div class="stat"><strong id="todayVideos">0</strong><span>Videos played today</span></div><div class="stat"><strong id="todayAccuracy">—</strong><span>Today's accuracy</span></div></div><button class="primary" id="startBtn">＋ &nbsp;Start New Video</button><button class="secondary finish" id="joinBtn">Join a shared game</button></div>
-<div class="section-title"><h2>Lifetime Stats</h2></div><div class="panel"><div class="daily"><div class="stat"><strong id="totalQuestions">0</strong><span>Questions answered</span></div><div class="stat"><strong id="lifetimeAccuracy">—</strong><span>Overall accuracy</span></div><div class="stat"><strong id="lifetimeVideos">0</strong><span>Videos completed</span></div><div class="stat"><strong id="bestScore">—</strong><span>Best video score</span></div></div></div>
-<div class="section-title"><h2>Today's Videos</h2><small id="todayCount"></small></div><div id="todayList" class="panel"></div><div class="section-title"><h2>Recent History</h2><small id="historyCount"></small></div><div id="historyList" class="panel"></div><div class="section-title"><h2>Shared Game History</h2><small id="sharedHistoryCount"></small></div>
-<div id="sharedHistoryList" class="panel">
-  <div class="empty">Your shared games will appear here.</div>
-</div><button class="danger-link" id="clearHistory">Clear all history</button>
-<section class="panel"><div class="section-title" style="margin-top:0"><h2>Saved Players</h2><small>Invite shortcuts</small></div><div id="savedPlayers" class="empty" style="padding:8px">No saved players yet.</div><button class="secondary" id="addPlayer" style="width:100%;margin-top:8px">＋ Add a player</button></section></section>
-<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Dashboard</button><span class="pill" id="sessionPill">IN PROGRESS</span></div><div class="panel"><div class="eyebrow" id="playTitle">VIDEO</div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="secondary finish" id="finishBtn">Finish video early</button></div></section>
-<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Dashboard</button><span class="pill done">VIDEO COMPLETE</span></div><div class="panel"><div class="eyebrow" id="summaryTitle">VIDEO RESULTS</div><div class="summary-score" id="summaryScore">0 / 0</div><div class="summary-pct" id="summaryPct">0%</div><div class="summary-stats"><div class="stat"><strong id="summaryCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="summaryWrong">0</strong><span>Incorrect</span></div></div><button class="primary" id="anotherBtn">＋ &nbsp;Start Another Video</button><button class="secondary finish" id="summaryDone">Back to Dashboard</button></div></section>
-<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Dashboard</button><span class="pill" id="sharedStatus">SHARED GAME</span></div><div class="panel"><div class="eyebrow">SHARED TRIVIA GAME</div><h2 id="sharedTitle" style="margin:8px 0">Game</h2><div class="sub" id="sharedProgress">Question 1</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice">Your answers sync with the group.</div><div id="scoreboard"></div><div class="answer-grid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="shareAgain">Share invitation link</button></div></section>
+:root{color-scheme:dark;--bg:#0c111b;--panel:#171f2e;--panel2:#202b3c;--text:#f4f7fb;--muted:#9aabc0;--green:#27c475;--red:#f05b62;--blue:#62a9ff;--line:#2b394b;--radius:20px}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#111827 0%,var(--bg) 48%);color:var(--text);font:16px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}
+button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}button:disabled{opacity:.4;cursor:not-allowed}
+.app{max-width:520px;margin:0 auto;padding:18px 0 36px}
+.header{display:flex;align-items:center;gap:12px;margin:6px 2px 22px}
+.logo{width:52px;height:52px;border-radius:15px;display:block;box-shadow:0 6px 18px #2b86ff33}
+.header h1{font-size:23px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.3px}.header h1 span{color:var(--blue)}
+.header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px #0002}
+.eyebrow{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700}
+.daily{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.stat{background:var(--panel2);border-radius:15px;padding:14px}.stat strong{font-size:28px;display:block;line-height:1.2}.stat span{font-size:12px;color:var(--muted)}
+.primary{background:var(--blue);color:#071323;border-radius:16px;font-weight:800;padding:16px;width:100%;font-size:17px}
+.secondary{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px;font-weight:700}
+.muted-btn{color:var(--muted);background:transparent;padding:10px}
+.row{display:flex;gap:10px;align-items:center}
+.today-line{color:var(--muted);font-size:13px;text-align:center;margin-top:14px}
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.menu button{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.menu .ico{font-size:26px;line-height:1}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:16px;margin:0}.section-title small{color:var(--muted)}
+.video-card{padding:14px;background:var(--panel2);border-radius:16px;margin:10px 0}.video-card:first-child{margin-top:0}.video-card:last-child{margin-bottom:0}
+.video-title{font-weight:700;overflow-wrap:anywhere}.meta{font-size:13px;color:var(--muted);margin-top:5px}
+.pill{font-size:12px;padding:5px 9px;border-radius:99px;background:#23344a;color:#b6d5ff;font-weight:700;white-space:nowrap}.pill.done{background:#173c2e;color:#8ee6b9}.pill.stop{background:#3d2a1a;color:#ffc68a}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:99px;background:#23344a;color:#b6d5ff;font-weight:700;margin-left:6px;vertical-align:1px}.tag.stop{background:#3d2a1a;color:#ffc68a}.tag.done{background:#173c2e;color:#8ee6b9}.tag.you{background:#2a2550;color:#c9bfff}
+.empty{color:var(--muted);text-align:center;padding:24px 8px}
+.screen{display:none}.screen.active{display:block}
+.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.back{background:transparent;color:var(--muted);padding:8px 0}
+.progress-track{height:9px;background:#293446;border-radius:9px;overflow:hidden;margin:12px 0 20px}.progress-fill{height:100%;background:var(--blue);width:0;transition:width .2s}
+.big-number{text-align:center;font-size:42px;font-weight:900;margin:6px 0}.sub{text-align:center;color:var(--muted);margin-bottom:18px}
+.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.answer{min-height:116px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{font-size:34px}
+.correct{background:linear-gradient(150deg,#1e9d61,#147244)}.wrong{background:linear-gradient(150deg,#d64b53,#9d3238)}
+.finish{width:100%;margin-top:12px}
+.stop-btn{width:100%;margin-top:12px;background:transparent;border:1px solid #5a3a2a;color:#ffc68a;border-radius:14px;padding:12px;font-weight:700}
+.form-field{margin:15px 0}.form-field label{display:block;font-weight:700;margin-bottom:7px}
+.form-field input,.form-field select{width:100%;background:#0f1724;border:1px solid var(--line);border-radius:13px;padding:14px;color:white;outline:none}
+.dialog{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:10}.dialog.open{display:flex}
+.sheet{background:#171f2e;border:1px solid var(--line);border-radius:24px;padding:22px;width:min(520px,100%);box-shadow:0 20px 60px #0008}.sheet h2{margin:0 0 6px}.sheet p{color:var(--muted);margin:0 0 10px}
+.stack{display:grid;gap:10px;margin-top:16px}.danger{background:#d64b53;color:#fff;border-radius:16px;font-weight:800;padding:14px}
+.summary-score{font-size:46px;font-weight:900;text-align:center;margin:8px}.summary-pct{text-align:center;color:var(--green);font-weight:800;font-size:18px}
+.summary-note{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
+.summary-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.summary-stats .stat{text-align:center}.summary-stats .stat strong{font-size:25px}
+.history-row{display:flex;justify-content:space-between;gap:12px;align-items:center}.history-score{font-weight:800;text-align:right;white-space:nowrap}.history-score small{display:block;color:var(--muted);font-weight:500}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.card-actions .secondary{flex:1;padding:10px;font-size:14px}
+.players-box{margin-top:10px;border-top:1px solid var(--line);padding-top:4px}
+.navfoot{text-align:center;color:var(--muted);font-size:12px;padding:15px 0}
+.danger-link{background:transparent;color:#f07b80;padding:10px}
+.scoreline{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.scoreline:last-child{border:0}
+.notice{color:#b6d5ff;background:#172a42;padding:12px;border-radius:12px;font-size:13px;margin:12px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{background:#172a42;color:#b6d5ff;border:1px solid #2b4a70;border-radius:99px;padding:8px 14px;font-weight:700;font-size:14px}
+.invite-label{color:var(--muted);font-size:13px;margin-top:14px}
+.help h3{font-size:16px;margin:18px 0 6px}.help h3:first-child{margin-top:0}.help p,.help li{color:#d3dce8;line-height:1.5;margin:0 0 6px}.help ul{padding-left:20px;margin:0}
+@media(min-width:520px){body{padding:20px}.app{padding-top:8px}}
+</style></head><body><main class="app">
+<header class="header"><img class="logo" src="icon.svg" alt=""><div><h1>Trivia <span>Tracker</span></h1><p>Your personal trivia scorebook</p></div></header>
+
+<!-- HOME: start a game, plus a small menu for everything else -->
+<section id="home" class="screen active">
+  <div class="panel">
+    <div class="eyebrow" id="dateLabel">TODAY</div>
+    <div id="continueList"></div>
+    <button class="primary" id="startBtn" style="margin-top:14px">＋ &nbsp;Start New Game</button>
+    <button class="secondary finish" id="joinBtn">Join a shared game</button>
+    <div class="today-line" id="todayLine"></div>
+  </div>
+  <nav class="menu">
+    <button id="menuHistory"><span class="ico">📊</span>Game History</button>
+    <button id="menuPlayers"><span class="ico">👥</span>Players</button>
+    <button id="menuHelp"><span class="ico">❔</span>Help</button>
+  </nav>
+</section>
+
+<!-- SOLO GAME -->
+<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><div class="eyebrow" id="playTitle">VIDEO</div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn">■ &nbsp;Stop game</button></div></section>
+
+<!-- RESULTS (solo finish, or any stopped game) -->
+<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><div class="eyebrow" id="summaryTitle">RESULTS</div><div class="summary-score" id="summaryScore">0 / 0</div><div class="summary-pct" id="summaryPct">0%</div><div class="summary-note" id="summaryNote"></div><div class="summary-stats"><div class="stat"><strong id="summaryCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="summaryWrong">0</strong><span>Incorrect</span></div></div><button class="primary" id="anotherBtn">＋ &nbsp;Start Another Game</button><button class="secondary finish" id="summaryDone">Back to Home</button></div></section>
+
+<!-- SHARED GAME -->
+<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">SHARED GAME</span></div><div class="panel"><div class="eyebrow">SHARED TRIVIA GAME</div><h2 id="sharedTitle" style="margin:8px 0">Game</h2><div class="sub" id="sharedProgress" style="text-align:left;margin-bottom:0">Question 1</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice">Your answers sync with the group.</div><div id="scoreboard"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="shareAgain">Share invitation link</button><div id="inviteRecent"></div><button class="stop-btn" id="sharedStopBtn">■ &nbsp;Stop game</button></div></section>
+
+<!-- GAME HISTORY -->
+<section id="history" class="screen">
+  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">GAME HISTORY</span></div>
+  <div class="panel"><div class="eyebrow">Lifetime stats</div><div class="daily" style="margin-bottom:0"><div class="stat"><strong id="totalQuestions">0</strong><span>Questions answered</span></div><div class="stat"><strong id="lifetimeAccuracy">—</strong><span>Overall accuracy</span></div><div class="stat"><strong id="lifetimeVideos">0</strong><span>Games completed</span></div><div class="stat"><strong id="bestScore">—</strong><span>Best game score</span></div></div></div>
+  <div class="section-title"><h2>Past games</h2><small id="historyCount"></small></div>
+  <div id="historyList" class="panel"><div class="empty">Loading…</div></div>
+  <button class="danger-link" id="clearHistory">Clear solo history</button>
+</section>
+
+<!-- PLAYERS (address book) -->
+<section id="players" class="screen">
+  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">PLAYERS</span></div>
+  <div class="panel"><div class="eyebrow">Recent players · last 90 days</div><p class="meta" style="margin:8px 0 12px">People you've played shared games with show up here on their own. Only their names are saved, on this phone. Anyone you haven't played with in 90 days drops off. To invite someone, start a shared game and tap their name.</p><div id="savedPlayers"></div></div>
+</section>
+
+<!-- HELP -->
+<section id="help" class="screen">
+  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">HELP</span></div>
+  <div class="panel help">
+    <h3>Start a game</h3>
+    <p>Tap <b>Start New Game</b>. Type the video's name and how many questions it has. Pick <b>Just me</b> to play alone, or <b>Play together</b> to play with friends.</p>
+    <h3>Keep score</h3>
+    <p>Answer each question in your head (or out loud). Then tap <b>Correct</b> or <b>Incorrect</b>. It's on the honor system. Tapped the wrong one in a solo game? Use <b>Undo</b>.</p>
+    <h3>Stop early</h3>
+    <p>Tap <b>Stop game</b> at any time. You'll be asked if you want to save your score. If you save it, your history shows how many questions you answered.</p>
+    <h3>Take a break</h3>
+    <p>Tap <b>‹ Home</b> to step away. Your game waits for you on the home screen. Tap <b>Resume</b> to pick up where you left off.</p>
+    <h3>Play with friends</h3>
+    <ul>
+      <li>Choose <b>Play together</b> and enter your name.</li>
+      <li>Send the invitation link by text message.</li>
+      <li>Your friend opens the link, types their name and taps <b>Join game</b>.</li>
+      <li>Everyone taps their own answers. The scoreboard updates every few seconds.</li>
+    </ul>
+    <h3>Recent players</h3>
+    <p>No sign-up needed. People you play shared games with are remembered by first name for 90 days. In a shared game, tap a name under <b>Invite a recent player</b> and pick them in Messages. Their phone number comes from your phone's contacts, not this app.</p>
+    <h3>See past scores</h3>
+    <p>Tap <b>Game History</b>. For a game you played with friends, tap <b>See everyone's scores</b>.</p>
+    <h3>Where your scores are kept</h3>
+    <p>Solo games are saved on this phone only. Shared games are saved online. Clearing your browser's data erases your solo history.</p>
+    <h3>Put it on your home screen</h3>
+    <p>On iPhone, open the app in Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</p>
+  </div>
+</section>
+
 <footer class="navfoot">Solo scores are saved on this device. Shared scores sync online.</footer></main>
-<div class="dialog" id="startDialog"><div class="sheet"><h2>New trivia video</h2><p>Give this video a name and tell me how many questions it has.</p><form id="startForm"><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit">Start</button></div></form></div></div>
+
+<div class="dialog" id="startDialog"><div class="sheet"><h2>New trivia game</h2><p>Give this video a name and tell me how many questions it has.</p><form id="startForm"><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit">Start</button></div></form></div></div>
 <div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm"><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit">Join game</button></div></form></div></div>
-<div class="dialog" id="confirmDialog"><div class="sheet"><h2>Clear all history?</h2><p>This permanently deletes your trivia scores stored on this device.</p><div class="row"><button class="secondary" id="cancelClear" style="flex:1">Cancel</button><button class="primary" id="confirmClear" style="flex:1;background:#d64b53;color:white">Clear all</button></div></div></div>
+<div class="dialog" id="confirmDialog"><div class="sheet"><h2>Clear solo history?</h2><p>This permanently deletes the solo game scores stored on this device. Shared games are not affected.</p><div class="row"><button class="secondary" id="cancelClear" style="flex:1">Cancel</button><button class="primary" id="confirmClear" style="flex:1;background:#d64b53;color:white">Clear</button></div></div></div>
+<div class="dialog" id="stopDialog"><div class="sheet"><h2>Stop this game?</h2><p id="stopText"></p><div class="stack"><button class="primary" id="stopSave">Yes, save my score</button><button class="danger" id="stopDiscard">No, throw it away</button><button class="secondary" id="stopCancel">Keep playing</button></div></div></div>
+
 <script>
 (()=>{
 // Supabase connection settings. Paste your project's Publishable key between the quotes below.
 const SUPABASE_URL='https://ezzioiscaokqlsgyzwkt.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_o-42xBSeWzskmgph2mxXQg_f1TEesNK';
-const KEY='triviaTracker_v1',PLAYER_KEY='triviaTracker_players_v1',SHARED_KEY='triviaTracker_shared_v1';
-let sessions=load(KEY),players=load(PLAYER_KEY),shared=load(SHARED_KEY),activeId=null,activeShared=null,pollTimer=null;
+
+// Data kept on this device (browser localStorage)
+const KEY='triviaTracker_v1',SHARED_KEY='triviaTracker_shared_v1',RECENT_KEY='triviaTracker_recent_v1',MYNAME_KEY='triviaTracker_myname_v1';
+const OLD_PLAYER_KEY='triviaTracker_players_v1',RECENT_DAYS=90;
+let sessions=load(KEY),shared=load(SHARED_KEY),recent=load(RECENT_KEY),activeId=null,activeShared=null,pollTimer=null;
+
 const $=id=>document.getElementById(id);
 function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return []}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dateLabel(d){return new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
 function pct(c,t){return t?Math.round(c/t*100)+'%':'—'}
-function counts(s){const c=s.answers.filter(a=>a==='c').length,w=s.answers.filter(a=>a==='w').length;return {c,w,answered:c+w}}
-function switchScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
+function counts(s){const a=s.answers||[],c=a.filter(x=>x==='c').length,w=a.filter(x=>x==='w').length;return {c,w,answered:c+w}}
+function openDialog(id){$(id).classList.add('open')}
+function closeDialog(id){$(id).classList.remove('open')}
+function switchScreen(id){
+  if(id!=='shared')clearInterval(pollTimer);
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $(id).classList.add('active');window.scrollTo(0,0);
+}
+function goHome(){switchScreen('home');renderHome()}
+
+// ---------- Supabase ----------
+// Every database call goes through rpc(): it calls a database function by name.
 function apiReady(){return SUPABASE_PUBLISHABLE_KEY!=='PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE'&&SUPABASE_PUBLISHABLE_KEY.length>10}
-async function rpc(name,args){if(!apiReady())throw new Error('The Supabase publishable key has not been added to the app yet.');const r=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify(args)});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.message||data.details||'Supabase request failed ('+r.status+')');return data}
-function renderPlayers(){const el=$('savedPlayers');el.innerHTML=players.length?players.map((p,i)=>`<div class="video-card"><div class="history-row"><div><div class="video-title">${escapeHtml(p.name)}</div><div class="meta">${escapeHtml(p.phone)}</div></div><button class="muted-btn" data-remove-player="${i}">Remove</button></div></div>`).join(''):'<div class="empty">No saved players yet. Add Jolene once to make invitations easier.</div>'}
-function card(s){const n=counts(s),score=s.finished?`${n.c} / ${s.total}`:`${n.answered} / ${s.total} answered`;return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}</div><div class="meta">${dateLabel(s.date)} · ${score}</div></div><div class="history-score">${s.finished?pct(n.c,s.total):'In progress'}<small>${s.finished?'Completed':'Paused'}</small></div></div>${!s.finished?`<button class="secondary" style="width:100%;margin-top:10px" data-resume="${s.id}">Resume</button>`:''}</div>`}
-function render(){const day=today(),todays=sessions.filter(s=>s.date===day),completed=sessions.filter(s=>s.finished),all=sessions.flatMap(s=>s.answers),correct=all.filter(a=>a==='c').length,total=all.length;$('dateLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();$('todayVideos').textContent=todays.length;$('todayAccuracy').textContent=pct(todays.reduce((n,s)=>n+counts(s).c,0),todays.reduce((n,s)=>n+counts(s).answered,0));$('totalQuestions').textContent=total;$('lifetimeAccuracy').textContent=pct(correct,total);$('lifetimeVideos').textContent=completed.length;$('bestScore').textContent=completed.length?Math.max(...completed.map(s=>Math.round(counts(s).c/s.total*100)))+'%':'—';$('todayCount').textContent=todays.length+' videos';$('historyCount').textContent=sessions.length+' total';$('todayList').innerHTML=todays.length?todays.slice().reverse().map(card).join(''):'<div class="empty">No videos yet today. Start your first one!</div>';$('historyList').innerHTML=sessions.length?sessions.slice().reverse().slice(0,30).map(card).join(''):'<div class="empty">Your completed videos will appear here.</div>';renderSharedStats()}
-async function renderSharedStats(){
-  const results=await Promise.all(shared.slice(-25).map(async s=>{
-    try{
-      const data=await rpc('get_trivia_game',{p_invite_code:s.invite_code});
-      const game=data.game;
-      const mine=(data.players||[]).find(p=>p.player_id===s.player_id);
-      if(!mine)return null;
-      return {
-        answered:Number(mine.answered||0),
-        correct:Number(mine.correct||0),
-        total:Number(game.total_questions||s.total_questions||0)
-      };
-    }catch(e){
-      return null;
-    }
-  }));
+async function rpc(name,args){
+  if(!apiReady())throw new Error('The Supabase publishable key has not been added to the app yet.');
+  const r=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify(args)});
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok){const err=new Error(data.message||data.details||'Supabase request failed ('+r.status+')');err.status=r.status;err.code=data.code;throw err}
+  return data;
+}
+// True when the database function hasn't been added in Supabase yet
+function isMissingFunction(e){return e&&(e.code==='PGRST202'||e.status===404)}
+function playerStopped(p){return !!(p&&(p.stopped||p.stopped_at))}
 
-  const games=results.filter(Boolean);
-  const soloAnswers=sessions.flatMap(s=>s.answers);
-  const soloCorrect=soloAnswers.filter(a=>a==='c').length;
-  const soloCompleted=sessions.filter(s=>s.finished);
-  const sharedAnswered=games.reduce((n,g)=>n+g.answered,0);
-  const sharedCorrect=games.reduce((n,g)=>n+g.correct,0);
-  const sharedCompleted=games.filter(g=>g.total>0&&g.answered>=g.total);
+// ---------- Stop dialog (used by solo and shared games) ----------
+let stopHandlers=null;
+function askStop(answered,total,onSave,onDiscard){
+  stopHandlers={onSave,onDiscard};
+  if(answered>0){
+    $('stopText').textContent=`You've answered ${answered} of ${total} questions. Do you want to save your score?`;
+    $('stopSave').style.display='';$('stopDiscard').textContent='No, throw it away';
+  }else{
+    $('stopText').textContent="You haven't answered any questions yet, so there's no score to save.";
+    $('stopSave').style.display='none';$('stopDiscard').textContent='Stop game';
+  }
+  openDialog('stopDialog');
+}
+$('stopCancel').onclick=()=>{closeDialog('stopDialog');stopHandlers=null};
+$('stopSave').onclick=async()=>{closeDialog('stopDialog');const h=stopHandlers;stopHandlers=null;if(h)await h.onSave()};
+$('stopDiscard').onclick=async()=>{closeDialog('stopDialog');const h=stopHandlers;stopHandlers=null;if(h)await h.onDiscard()};
 
-  const totalQuestions=soloAnswers.length+sharedAnswered;
-  const totalCorrect=soloCorrect+sharedCorrect;
-  const completedCount=soloCompleted.length+sharedCompleted.length;
-  const scores=[
-    ...soloCompleted.map(s=>Math.round(counts(s).c/s.total*100)),
-    ...sharedCompleted.map(g=>Math.round(g.correct/g.total*100))
-  ];
+function showSummary({title,c,w,total,stopped}){
+  const answered=c+w;
+  $('summaryTitle').textContent=title;
+  $('summaryPill').textContent=stopped?'GAME STOPPED':'GAME COMPLETE';
+  $('summaryPill').className='pill '+(stopped?'stop':'done');
+  $('summaryScore').textContent=stopped?`${c} / ${answered}`:`${c} / ${total}`;
+  $('summaryPct').textContent=pct(c,stopped?answered:total)+' correct';
+  $('summaryNote').textContent=stopped?`Stopped after ${answered} of ${total} questions`:'';
+  $('summaryCorrect').textContent=c;$('summaryWrong').textContent=w;
+  switchScreen('summary');
+}
 
-  $('totalQuestions').textContent=totalQuestions;
-  $('lifetimeAccuracy').textContent=pct(totalCorrect,totalQuestions);
-  $('lifetimeVideos').textContent=completedCount;
+// ---------- Home ----------
+function inProgressShared(s){return !s.stopped&&(s.answers||[]).length<(s.total_questions||Infinity)}
+function renderHome(){
+  $('dateLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+  const paused=sessions.filter(s=>!s.finished).slice(-3).reverse();
+  const live=shared.filter(s=>s.joined_at&&s.joined_at.slice(0,10)===today()&&inProgressShared(s)).slice(-3).reverse();
+  $('continueList').innerHTML=[
+    ...paused.map(s=>{const n=counts(s);return `<div class="video-card" style="margin-top:12px"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}</div><div class="meta">Paused · ${n.answered} of ${s.total} answered</div></div><button class="secondary" data-resume="${s.id}">Resume</button></div></div>`}),
+    ...live.map(s=>`<div class="video-card" style="margin-top:12px"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.video_title||'Shared game')}<span class="tag">Shared</span></div><div class="meta">${(s.answers||[]).length} of ${s.total_questions||'?'} answered</div></div><button class="secondary" data-resume-shared="${escapeHtml(s.player_token)}">Resume</button></div></div>`)
+  ].join('');
+  // Today's quick stats, from what's saved on this device
+  const day=today(),todays=sessions.filter(s=>s.date===day),todayShared=shared.filter(s=>s.joined_at&&s.joined_at.slice(0,10)===day);
+  const all=[...todays,...todayShared].map(counts),games=all.length,c=all.reduce((n,x)=>n+x.c,0),t=all.reduce((n,x)=>n+x.answered,0);
+  $('todayLine').textContent=games?`Today: ${games} game${games===1?'':'s'} · ${pct(c,t)} correct`:'No games yet today.';
+}
+$('continueList').onclick=e=>{
+  const b=e.target.closest('[data-resume]');if(b)return openSession(b.dataset.resume);
+  const s=e.target.closest('[data-resume-shared]');if(s){const g=shared.find(x=>x.player_token===s.dataset.resumeShared);if(g)enterShared(g)}
+};
+
+// ---------- Solo game ----------
+function openSession(id){activeId=id;if(!sessions.find(x=>x.id===id))return;switchScreen('play');renderPlay()}
+function renderPlay(){
+  const s=sessions.find(x=>x.id===activeId);if(!s)return;const n=counts(s);
+  $('playTitle').textContent=s.name;
+  $('qNumber').textContent=n.answered<s.total?`Question ${n.answered+1}`:'All questions answered';
+  $('qSub').textContent=`of ${s.total}`;
+  $('progress').style.width=Math.min(100,n.answered/s.total*100)+'%';
+  $('playCorrect').textContent=n.c;$('playWrong').textContent=n.w;
+  $('undoBtn').disabled=!s.answers.length;
+  $('correctBtn').disabled=$('wrongBtn').disabled=n.answered>=s.total;
+}
+function answer(v){const s=sessions.find(x=>x.id===activeId);if(!s||s.answers.length>=s.total)return;s.answers.push(v);save(KEY,sessions);renderPlay();if(s.answers.length===s.total)finishSession(false)}
+function finishSession(stopped){
+  const s=sessions.find(x=>x.id===activeId);if(!s)return;
+  s.finished=true;s.stopped=!!stopped;s.completedAt=new Date().toISOString();save(KEY,sessions);
+  const n=counts(s);showSummary({title:s.name,c:n.c,w:n.w,total:s.total,stopped:s.stopped});
+}
+$('stopBtn').onclick=()=>{
+  const s=sessions.find(x=>x.id===activeId);if(!s)return;
+  askStop(counts(s).answered,s.total,()=>finishSession(true),()=>{sessions=sessions.filter(x=>x.id!==s.id);save(KEY,sessions);activeId=null;goHome()});
+};
+$('correctBtn').onclick=()=>answer('c');$('wrongBtn').onclick=()=>answer('w');
+$('undoBtn').onclick=()=>{const s=sessions.find(x=>x.id===activeId);if(s&&s.answers.length){s.answers.pop();s.finished=false;s.stopped=false;delete s.completedAt;save(KEY,sessions);renderPlay()}};
+$('exitPlay').onclick=goHome;
+$('summaryHome').onclick=$('summaryDone').onclick=goHome;
+$('anotherBtn').onclick=()=>openDialog('startDialog');
+
+// ---------- Shared game ----------
+function inviteUrl(code){const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('invite',code);return u.toString()}
+async function shareInvite(toName){if(!activeShared)return;const url=inviteUrl(activeShared.invite_code);const text=(typeof toName==='string'?`Hi ${toName}! `:'')+'Join my trivia game: '+activeShared.video_title;try{if(navigator.share)await navigator.share({title:'Trivia Tracker invitation',text,url});else{await navigator.clipboard.writeText(url);alert('Invitation link copied. Paste it into Messages.')}}catch(e){if(e.name!=='AbortError')alert('Could not open sharing. You can copy this link: '+url)}}
+function scoreboardHtml(game,ps,myId){
+  return ps.slice().sort((a,b)=>Number(b.correct||0)-Number(a.correct||0)).map(p=>{
+    const answered=Number(p.answered||0),stopped=playerStopped(p)||(p.player_id===myId&&shared.some(s=>s.player_id===myId&&s.stopped));
+    const status=stopped?'<span class="tag stop">Stopped</span>':answered>=game.total_questions?'<span class="tag done">Done</span>':'';
+    return `<div class="scoreline"><div><strong>${escapeHtml(p.display_name)}</strong>${p.player_id===myId?'<span class="tag you">You</span>':''}${status}<div class="meta">${answered} of ${game.total_questions} answered</div></div><div style="text-align:right"><strong>${Number(p.correct||0)}</strong><div class="meta">${pct(Number(p.correct||0),answered)}</div></div></div>`;
+  }).join('')||'<div class="empty">No players yet.</div>';
+}
+async function refreshShared(){
+  if(!activeShared)return;
+  try{
+    const data=await rpc('get_trivia_game',{p_invite_code:activeShared.invite_code});
+    const game=data.game,ps=data.players||[];
+    $('sharedTitle').textContent=game.video_title;
+    $('sharedProgress').textContent=`${ps.length} player${ps.length===1?'':'s'} · ${game.total_questions} questions each`;
+    $('scoreboard').innerHTML=scoreboardHtml(game,ps,activeShared.player_id);
+    rememberPlayers(ps,activeShared.player_id,Date.now());renderInviteChips(ps);
+    const mine=ps.find(p=>p.player_id===activeShared.player_id);
+    const answered=Number(mine?.answered||0),done=answered>=game.total_questions,stopped=activeShared.stopped||playerStopped(mine);
+    $('sharedBar').style.width=Math.min(100,answered/game.total_questions*100)+'%';
+    $('sharedNotice').textContent=stopped?`You stopped this game after ${answered} questions. You can still watch the scoreboard.`:done?'You have answered every question. Waiting for the group — check the scoreboard.':`You are ${activeShared.display_name}. Your next answer is question ${answered+1}.`;
+    $('sharedAnswerGrid').style.display=stopped?'none':'';
+    $('sharedCorrect').disabled=$('sharedWrong').disabled=done||stopped;
+    $('sharedStopBtn').style.display=stopped||done?'none':'';
+    $('sharedStatus').textContent=stopped?'STOPPED':game.status==='completed'?'COMPLETED':'LIVE';
+    activeShared.total_questions=game.total_questions;activeShared.video_title=game.video_title;save(SHARED_KEY,shared);
+  }catch(e){$('sharedNotice').textContent='Could not refresh the scoreboard: '+e.message}
+}
+function enterShared(s){activeShared=s;$('scoreboard').innerHTML='';switchScreen('shared');refreshShared();clearInterval(pollTimer);pollTimer=setInterval(refreshShared,4000)}
+function rememberShared(s){try{localStorage.setItem(MYNAME_KEY,s.display_name)}catch{}shared.push(s);if(shared.length>25)shared=shared.slice(-25);save(SHARED_KEY,shared)}
+async function createShared(name,total,playerName){
+  const data=await rpc('create_trivia_game',{p_video_title:name,p_total_questions:total,p_player_name:playerName});
+  const s={game_id:data.game_id,invite_code:data.invite_code,player_id:data.player_id,player_token:data.player_token,display_name:playerName,video_title:name,total_questions:total,answers:[],joined_at:new Date().toISOString()};
+  rememberShared(s);enterShared(s);await shareInvite();
+}
+async function joinShared(code,playerName){
+  const data=await rpc('join_trivia_game',{p_invite_code:code,p_player_name:playerName});
+  const s={game_id:data.game_id,invite_code:code,player_id:data.player_id,player_token:data.player_token,display_name:playerName,answers:[],joined_at:new Date().toISOString()};
+  rememberShared(s);history.replaceState({},'',location.pathname);enterShared(s);
+}
+async function sharedAnswer(correct){
+  if(!activeShared||activeShared.stopped)return;
+  try{
+    await rpc('record_trivia_answer',{p_player_token:activeShared.player_token,p_question_number:(activeShared.answers||[]).length+1,p_is_correct:correct});
+    activeShared.answers=activeShared.answers||[];activeShared.answers.push(correct?'c':'w');save(SHARED_KEY,shared);await refreshShared();
+  }catch(e){alert('Could not save your answer: '+e.message)}
+}
+// Tell the database this player stopped. Returns false if that database function hasn't been added yet.
+async function stopOnServer(token,keep){
+  try{await rpc('stop_trivia_player',{p_player_token:token,p_keep_score:keep});return true}
+  catch(e){if(isMissingFunction(e))return false;throw e}
+}
+$('sharedStopBtn').onclick=()=>{
+  const s=activeShared;if(!s)return;const n=counts(s),total=s.total_questions||n.answered;
+  askStop(n.answered,total,
+    async()=>{ // save score
+      try{await stopOnServer(s.player_token,true)}catch(e){alert('Could not stop the game online: '+e.message);return}
+      s.stopped=true;save(SHARED_KEY,shared);clearInterval(pollTimer);
+      showSummary({title:s.video_title||'Shared game',c:n.c,w:n.w,total,stopped:true});
+    },
+    async()=>{ // throw it away
+      let removedOnline=true;
+      try{removedOnline=await stopOnServer(s.player_token,false)}catch(e){alert('Could not remove your score online: '+e.message);return}
+      shared=shared.filter(x=>x.player_token!==s.player_token);save(SHARED_KEY,shared);activeShared=null;
+      goHome();
+      if(!removedOnline&&n.answered)alert('Removed from your history on this phone. Other players can still see your score for this game.');
+    });
+};
+$('sharedCorrect').onclick=()=>sharedAnswer(true);$('sharedWrong').onclick=()=>sharedAnswer(false);
+$('shareAgain').onclick=shareInvite;$('sharedHome').onclick=goHome;
+
+// ---------- Game history ----------
+async function fetchSharedGames(){
+  return Promise.all(shared.slice(-25).map(async s=>{
+    try{const data=await rpc('get_trivia_game',{p_invite_code:s.invite_code});const ps=data.players||[];const mine=ps.find(p=>p.player_id===s.player_id);if(mine)rememberPlayers(ps,s.player_id,Date.parse(data.game.created_at)||Date.parse(s.joined_at||'')||0);return mine?{s,game:data.game,players:ps,mine}:null}
+    catch(e){return null}
+  })).then(r=>r.filter(Boolean));
+}
+function soloCard(s){
+  const n=counts(s);let score,label;
+  if(!s.finished){score=`${n.answered} / ${s.total}`;label='Paused'}
+  else if(s.stopped){score=`${n.c} / ${n.answered}`;label=`Stopped · ${pct(n.c,n.answered)}`}
+  else{score=`${n.c} / ${s.total}`;label=pct(n.c,s.total)}
+  const status=!s.finished?'<span class="tag">Paused</span>':s.stopped?'<span class="tag stop">Stopped</span>':'';
+  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}${status}</div><div class="meta">${dateLabel(s.date)} · Solo${s.stopped?` · ${n.answered} of ${s.total} answered`:''}</div></div><div class="history-score">${score}<small>${label}</small></div></div>${!s.finished?`<div class="card-actions"><button class="secondary" data-resume="${s.id}">Resume</button></div>`:''}</div>`;
+}
+function sharedCard({s,game,players:ps,mine}){
+  const answered=Number(mine.answered||0),correct=Number(mine.correct||0),total=Number(game.total_questions||0);
+  const stopped=s.stopped||playerStopped(mine),done=answered>=total,isCreator=game.creator_player_id===s.player_id;
+  const status=stopped?'<span class="tag stop">Stopped</span>':done?'':'<span class="tag">In progress</span>';
+  const key=escapeHtml(s.player_token);
+  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(game.video_title)}${status}</div><div class="meta">${dateLabel(String(game.created_at).slice(0,10))} · Shared · ${ps.length} player${ps.length===1?'':'s'}</div></div><div class="history-score">${correct} / ${done?total:answered}<small>${done?pct(correct,total):`${answered} of ${total} answered`}</small></div></div>
+    <div class="card-actions"><button class="secondary" data-toggle-scores="${key}">See everyone's scores</button>${!stopped&&!done?`<button class="secondary" data-resume-shared="${key}">Resume</button>`:''}</div>
+    <div class="players-box" data-scores-for="${key}" hidden>${scoreboardHtml(game,ps,s.player_id)}</div>
+    ${isCreator?`<button class="danger-link" data-delete-shared="${key}" style="padding:10px 0 0">Delete game for everyone</button>`:''}</div>`;
+}
+function soloTime(s){return Date.parse(s.completedAt||'')||Number(s.id)||Date.parse(s.date)}
+async function renderHistory(){
+  const el=$('historyList');
+  const soloOnly=sessions.map(s=>({t:soloTime(s),html:soloCard(s)}));
+  el.innerHTML=soloOnly.length||shared.length?'<div class="empty">Loading games…</div>':'<div class="empty">Your games will appear here.</div>';
+  const games=shared.length?await fetchSharedGames():[];
+  const items=[...soloOnly,...games.map(g=>({t:Date.parse(g.game.created_at)||Date.parse(g.s.joined_at||'')||0,html:sharedCard(g)}))].sort((a,b)=>b.t-a.t);
+  $('historyCount').textContent=items.length+' game'+(items.length===1?'':'s');
+  el.innerHTML=items.length?items.map(i=>i.html).join(''):'<div class="empty">Your games will appear here.</div>';
+  renderLifetime(games);
+}
+function renderLifetime(games){
+  const soloAnswers=sessions.flatMap(s=>s.answers),soloCorrect=soloAnswers.filter(a=>a==='c').length;
+  const soloCompleted=sessions.filter(s=>s.finished&&!s.stopped);
+  const g=games.map(x=>({answered:Number(x.mine.answered||0),correct:Number(x.mine.correct||0),total:Number(x.game.total_questions||0)}));
+  const sharedCompleted=g.filter(x=>x.total>0&&x.answered>=x.total);
+  const totalQ=soloAnswers.length+g.reduce((n,x)=>n+x.answered,0),totalC=soloCorrect+g.reduce((n,x)=>n+x.correct,0);
+  const scores=[...soloCompleted.map(s=>Math.round(counts(s).c/s.total*100)),...sharedCompleted.map(x=>Math.round(x.correct/x.total*100))];
+  $('totalQuestions').textContent=totalQ;$('lifetimeAccuracy').textContent=pct(totalC,totalQ);
+  $('lifetimeVideos').textContent=soloCompleted.length+sharedCompleted.length;
   $('bestScore').textContent=scores.length?Math.max(...scores)+'%':'—';
 }
-  async function renderSharedHistory(){
-  const el=$('sharedHistoryList');
-  const recent=shared.slice(-25).reverse();
-  $('sharedHistoryCount').textContent=recent.length+' games';
+$('historyList').onclick=async e=>{
+  const r=e.target.closest('[data-resume]');if(r)return openSession(r.dataset.resume);
+  const rs=e.target.closest('[data-resume-shared]');if(rs){const g=shared.find(x=>x.player_token===rs.dataset.resumeShared);if(g)enterShared(g);return}
+  const t=e.target.closest('[data-toggle-scores]');
+  if(t){const box=[...document.querySelectorAll('[data-scores-for]')].find(b=>b.dataset.scoresFor===t.dataset.toggleScores);if(box){box.hidden=!box.hidden;t.textContent=box.hidden?"See everyone's scores":'Hide scores'}return}
+  const b=e.target.closest('[data-delete-shared]');if(!b)return;
+  if(!confirm('Permanently delete this game for everyone? This cannot be undone.'))return;
+  const token=b.dataset.deleteShared;b.disabled=true;
+  try{await rpc('delete_trivia_game',{p_player_token:token});shared=shared.filter(s=>s.player_token!==token);save(SHARED_KEY,shared);await renderHistory();alert('Game deleted.')}
+  catch(err){alert('Could not delete game: '+err.message);b.disabled=false}
+};
+$('clearHistory').onclick=()=>openDialog('confirmDialog');$('cancelClear').onclick=()=>closeDialog('confirmDialog');
+$('confirmClear').onclick=()=>{sessions=[];save(KEY,sessions);closeDialog('confirmDialog');renderHistory()};
 
-  if(!recent.length){
-    el.innerHTML='<div class="empty">No shared games yet.</div>';
+// ---------- Recent players ----------
+// Only first names are kept, on this phone. Phone numbers stay in the phone's own contacts:
+// inviting opens the phone's share sheet (Messages, WhatsApp...) where you pick the person.
+const DAY=86400000;
+function pruneRecent(){const cutoff=Date.now()-RECENT_DAYS*DAY;recent=recent.filter(p=>p.last>=cutoff).sort((a,b)=>b.last-a.last);save(RECENT_KEY,recent)}
+function rememberPlayers(ps,myId,when){
+  let changed=false;
+  for(const p of ps){
+    const name=String(p.display_name||'').trim();if(!name||p.player_id===myId)continue;
+    const r=recent.find(x=>x.name.toLowerCase()===name.toLowerCase());
+    if(r){if(when>r.last){r.last=when;changed=true}}else{recent.push({name,last:when});changed=true}
+  }
+  if(changed)pruneRecent();
+}
+function daysAgo(t){const d=Math.floor((Date.now()-t)/DAY);return d<=0?'today':d===1?'yesterday':d+' days ago'}
+function renderPlayers(){
+  pruneRecent();const el=$('savedPlayers');
+  el.innerHTML=recent.length?recent.map((p,i)=>`<div class="video-card"><div class="history-row"><div><div class="video-title">${escapeHtml(p.name)}</div><div class="meta">Last played ${daysAgo(p.last)}</div></div><button class="muted-btn" data-remove-player="${i}">Remove</button></div></div>`).join(''):'<div class="empty" style="padding:8px">No recent players yet. Play a shared game and the people you play with will show up here.</div>';
+}
+$('savedPlayers').onclick=e=>{const b=e.target.closest('[data-remove-player]');if(b){recent.splice(Number(b.dataset.removePlayer),1);save(RECENT_KEY,recent);renderPlayers()}};
+// Shared game screen: one-tap invites for recent players who haven't joined this game yet
+function renderInviteChips(ps){
+  const inGame=new Set(ps.map(p=>String(p.display_name||'').trim().toLowerCase()));
+  const list=recent.filter(p=>!inGame.has(p.name.toLowerCase())).slice(0,8);
+  $('inviteRecent').innerHTML=list.length?`<div class="invite-label">Invite a recent player:</div><div class="chips">${list.map(p=>`<button class="chip" data-invite-name="${escapeHtml(p.name)}">${escapeHtml(p.name)}</button>`).join('')}</div>`:'';
+}
+$('inviteRecent').onclick=e=>{const b=e.target.closest('[data-invite-name]');if(b)shareInvite(b.dataset.inviteName)};
+// The old address book stored phone numbers. Keep the names, delete the numbers.
+(()=>{const old=load(OLD_PLAYER_KEY);if(old.length){for(const p of old)if(p&&p.name&&!recent.some(r=>r.name.toLowerCase()===p.name.trim().toLowerCase()))recent.push({name:p.name.trim(),last:Date.now()});}localStorage.removeItem(OLD_PLAYER_KEY);pruneRecent()})();
+
+// ---------- Menu and dialogs ----------
+$('menuHistory').onclick=()=>{switchScreen('history');renderHistory()};
+$('menuPlayers').onclick=()=>{switchScreen('players');renderPlayers()};
+$('menuHelp').onclick=()=>switchScreen('help');
+document.querySelectorAll('[data-home]').forEach(b=>b.onclick=goHome);
+$('startBtn').onclick=()=>{openDialog('startDialog');$('videoName').focus()};$('cancelStart').onclick=()=>closeDialog('startDialog');
+$('playMode').onchange=()=>$('playerNameField').style.display=$('playMode').value==='shared'?'block':'none';
+$('startForm').onsubmit=async e=>{
+  e.preventDefault();
+  const name=$('videoName').value.trim(),total=Number($('questionCount').value),mode=$('playMode').value;
+  if(!name||!Number.isInteger(total)||total<1||total>500)return;
+  if(mode==='shared'){
+    const pn=$('hostName').value.trim();if(!pn){alert('Enter your player name.');return}
+    try{closeDialog('startDialog');await createShared(name,total,pn)}catch(err){alert('Could not create shared game: '+err.message);openDialog('startDialog')}
     return;
   }
-
-  el.innerHTML='<div class="empty">Loading shared games...</div>';
-
-  const cards=await Promise.all(recent.map(async s=>{
-    let game=null,players=[];
-    try{
-      const data=await rpc('get_trivia_game',{p_invite_code:s.invite_code});
-      game=data.game;
-      players=data.players||[];
-    }catch(e){
-      return '';
-    }
-
-    const mine=players.find(p=>p.player_id===s.player_id);
-    if(!mine)return '';
-
-    const isCreator=game.creator_player_id===s.player_id;
-    const answered=Number(mine.answered||0);
-    const correct=Number(mine.correct||0);
-
-    return `<div class="video-card">
-      <div class="history-row">
-        <div style="min-width:0">
-          <div class="video-title">${escapeHtml(game.video_title)}</div>
-          <div class="meta">${dateLabel(game.created_at.slice(0,10))} · ${players.length} players</div>
-        </div>
-        <div class="history-score">${correct} / ${answered}<small>${answered} answered</small></div>
-      </div>
-      ${isCreator?`<button class="danger-link" data-delete-shared="${escapeHtml(s.player_token)}" style="padding:10px 0">Delete game</button>`:''}
-    </div>`;
-  }));
-
-  el.innerHTML=cards.filter(Boolean).join('')||'<div class="empty">No shared games found.</div>';
-}
-  function openSession(id){activeId=id;const s=sessions.find(x=>x.id===id);if(!s)return;switchScreen('play');renderPlay()}
-function renderPlay(){const s=sessions.find(x=>x.id===activeId);if(!s)return;const n=counts(s);$('playTitle').textContent=s.name;$('qNumber').textContent=n.answered<s.total?`Question ${n.answered+1}`:'All questions answered';$('qSub').textContent=`of ${s.total}`;$('progress').style.width=Math.min(100,n.answered/s.total*100)+'%';$('playCorrect').textContent=n.c;$('playWrong').textContent=n.w;$('undoBtn').disabled=!s.answers.length;$('correctBtn').disabled=$('wrongBtn').disabled=n.answered>=s.total;$('finishBtn').textContent=n.answered===s.total?'See Results':'Finish video early'}
-function answer(v){const s=sessions.find(x=>x.id===activeId);if(!s||s.answers.length>=s.total)return;s.answers.push(v);save(KEY,sessions);renderPlay();if(s.answers.length===s.total)finishSession()}
-function finishSession(){const s=sessions.find(x=>x.id===activeId);if(!s)return;s.finished=true;s.completedAt=new Date().toISOString();save(KEY,sessions);const n=counts(s);$('summaryTitle').textContent=s.name;$('summaryScore').textContent=`${n.c} / ${s.total}`;$('summaryPct').textContent=pct(n.c,s.total)+' correct';$('summaryCorrect').textContent=n.c;$('summaryWrong').textContent=n.w;switchScreen('summary');render()}
-function inviteUrl(code){const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('invite',code);return u.toString()}
-async function shareInvite(){if(!activeShared)return;const url=inviteUrl(activeShared.invite_code);try{if(navigator.share)await navigator.share({title:'Trivia Tracker invitation',text:'Join my trivia game: '+activeShared.video_title,url});else{await navigator.clipboard.writeText(url);alert('Invitation link copied. Paste it into Messages.')}}catch(e){if(e.name!=='AbortError')alert('Could not open sharing. You can copy this link: '+url)}}
-async function refreshShared(){if(!activeShared)return;try{const data=await rpc('get_trivia_game',{p_invite_code:activeShared.invite_code});const game=data.game,ps=data.players||[];$('sharedTitle').textContent=game.video_title;$('sharedProgress').textContent=`${ps.reduce((n,p)=>n+Number(p.answered||0),0)} answers recorded across ${ps.length} players · ${game.total_questions} questions each`;$('sharedBar').style.width='0%';$('scoreboard').innerHTML=ps.map(p=>`<div class="scoreline"><div><strong>${escapeHtml(p.display_name)}</strong><div class="meta">${p.answered} of ${game.total_questions} answered</div></div><div style="text-align:right"><strong>${p.correct}</strong><div class="meta">${pct(p.correct,p.answered)}</div></div></div>`).join('');const mine=ps.find(p=>p.player_id===activeShared.player_id);const answered=Number(mine?.answered||0);$('sharedBar').style.width=Math.min(100,answered/game.total_questions*100)+'%';$('sharedNotice').textContent=answered>=game.total_questions?'You have answered every question. Waiting for the group or review the scoreboard.':`You are ${activeShared.display_name}. Your next answer is question ${answered+1}.`;$('sharedCorrect').disabled=$('sharedWrong').disabled=answered>=game.total_questions;$('sharedStatus').textContent=game.status==='completed'?'COMPLETED':'LIVE';activeShared.total_questions=game.total_questions;activeShared.video_title=game.video_title;save(SHARED_KEY,shared)}catch(e){$('sharedNotice').textContent='Could not refresh the scoreboard: '+e.message}}
-function enterShared(s){activeShared=s;switchScreen('shared');refreshShared();clearInterval(pollTimer);pollTimer=setInterval(refreshShared,4000)}
-async function createShared(name,total,playerName){const data=await rpc('create_trivia_game',{p_video_title:name,p_total_questions:total,p_player_name:playerName});const s={game_id:data.game_id,invite_code:data.invite_code,player_id:data.player_id,player_token:data.player_token,display_name:playerName,video_title:name,total_questions:total,answers:[]};shared.push(s);
-if(shared.length>25)shared=shared.slice(-25);
-save(SHARED_KEY,shared);enterShared(s);await shareInvite()}
-async function joinShared(code,playerName){const data=await rpc('join_trivia_game',{p_invite_code:code,p_player_name:playerName});const s={game_id:data.game_id,invite_code:code,player_id:data.player_id,player_token:data.player_token,display_name:playerName,answers:[]};shared.push(s);
-if(shared.length>25)shared=shared.slice(-25);
-save(SHARED_KEY,shared);
-history.replaceState({},'',location.pathname);
-enterShared(s)
-                                          }
-async function sharedAnswer(correct){if(!activeShared)return;try{const data=await rpc('record_trivia_answer',{p_player_token:activeShared.player_token,p_question_number:(activeShared.answers||[]).length+1,p_is_correct:correct});activeShared.answers=activeShared.answers||[];activeShared.answers.push(correct?'c':'w');save(SHARED_KEY,shared);await refreshShared()}catch(e){alert('Could not save your answer: '+e.message)}}
-$('startBtn').onclick=()=>{$('startDialog').classList.add('open');$('videoName').focus()};$('cancelStart').onclick=()=>$('startDialog').classList.remove('open');$('playMode').onchange=()=>$('playerNameField').style.display=$('playMode').value==='shared'?'block':'none';$('startForm').onsubmit=async e=>{e.preventDefault();const name=$('videoName').value.trim(),total=Number($('questionCount').value),mode=$('playMode').value;if(!name||!Number.isInteger(total)||total<1||total>500)return;if(mode==='shared'){const pn=$('hostName').value.trim();if(!pn){alert('Enter your player name.');return}try{$('startDialog').classList.remove('open');await createShared(name,total,pn)}catch(err){alert('Could not create shared game: '+err.message);$('startDialog').classList.add('open')}return}const s={id:Date.now().toString(),name,total,date:today(),answers:[],finished:false,mode:'solo'};sessions.push(s);save(KEY,sessions);$('startDialog').classList.remove('open');$('videoName').value='';$('questionCount').value='';$('playMode').value='solo';$('playerNameField').style.display='none';openSession(s.id)};
-$('sharedHistoryList').onclick=async e=>{
-  const b=e.target.closest('[data-delete-shared]');
-  if(!b)return;
-
-  if(!confirm('Permanently delete this game for everyone? This cannot be undone.'))return;
-
-  const token=b.dataset.deleteShared;
-  b.disabled=true;
-
-  try{
-    await rpc('delete_trivia_game',{p_player_token:token});
-    shared=shared.filter(s=>s.player_token!==token);
-    save(SHARED_KEY,shared);
-    await renderSharedHistory();
-    render();
-    alert('Game deleted.');
-  }catch(err){
-    alert('Could not delete game: '+err.message);
-    b.disabled=false;
-  }
+  const s={id:Date.now().toString(),name,total,date:today(),answers:[],finished:false,mode:'solo'};
+  sessions.push(s);save(KEY,sessions);closeDialog('startDialog');
+  $('videoName').value='';$('questionCount').value='';$('playMode').value='solo';$('playerNameField').style.display='none';
+  openSession(s.id);
 };
-  $('correctBtn').onclick=()=>answer('c');$('wrongBtn').onclick=()=>answer('w');$('undoBtn').onclick=()=>{const s=sessions.find(x=>x.id===activeId);if(s&&s.answers.length){s.answers.pop();s.finished=false;delete s.completedAt;save(KEY,sessions);renderPlay()}};$('finishBtn').onclick=finishSession;$('exitPlay').onclick=()=>{switchScreen('home');render()};$('summaryHome').onclick=$('summaryDone').onclick=()=>{switchScreen('home');render()};$('anotherBtn').onclick=()=>$('startDialog').classList.add('open');$('todayList').onclick=$('historyList').onclick=e=>{const b=e.target.closest('[data-resume]');if(b)openSession(b.dataset.resume)};
-$('joinBtn').onclick=()=>$('joinDialog').classList.add('open');$('cancelJoin').onclick=()=>$('joinDialog').classList.remove('open');$('joinForm').onsubmit=async e=>{e.preventDefault();try{$('cancelJoin').disabled=true;await joinShared($('inviteCode').value.trim(),$('joinName').value.trim());$('joinDialog').classList.remove('open')}catch(err){alert('Could not join game: '+err.message)}finally{$('cancelJoin').disabled=false}};$('sharedCorrect').onclick=()=>sharedAnswer(true);$('sharedWrong').onclick=()=>sharedAnswer(false);$('shareAgain').onclick=shareInvite;$('sharedHome').onclick=()=>{clearInterval(pollTimer);switchScreen('home');render();renderSharedHistory()};
-$('clearHistory').onclick=()=>$('confirmDialog').classList.add('open');$('cancelClear').onclick=()=>$('confirmDialog').classList.remove('open');$('confirmClear').onclick=()=>{sessions=[];save(KEY,sessions);$('confirmDialog').classList.remove('open');render()};$('addPlayer').onclick=()=>{const name=prompt('Player name (e.g. Jolene):');if(!name||!name.trim())return;const phone=prompt('Phone number for Messages invitation:');if(!phone||!phone.trim())return;players.push({name:name.trim(),phone:phone.trim()});save(PLAYER_KEY,players);renderPlayers()};$('savedPlayers').onclick=e=>{const b=e.target.closest('[data-remove-player]');if(b){players.splice(Number(b.dataset.removePlayer),1);save(PLAYER_KEY,players);renderPlayers()}};
-renderPlayers();render();renderSharedHistory();const invite=new URLSearchParams(location.search).get('invite');if(invite){$('inviteCode').value=invite;$('joinDialog').classList.add('open')}if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+$('joinBtn').onclick=()=>openDialog('joinDialog');$('cancelJoin').onclick=()=>closeDialog('joinDialog');
+$('joinForm').onsubmit=async e=>{e.preventDefault();try{$('cancelJoin').disabled=true;await joinShared($('inviteCode').value.trim(),$('joinName').value.trim());closeDialog('joinDialog')}catch(err){alert('Could not join game: '+err.message)}finally{$('cancelJoin').disabled=false}};
+
+// ---------- Start up ----------
+renderHome();
+const myName=localStorage.getItem(MYNAME_KEY)||'';$('hostName').value=myName;$('joinName').value=myName;
+const invite=new URLSearchParams(location.search).get('invite');
+if(invite){$('inviteCode').value=invite;openDialog('joinDialog')}
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script></body></html>

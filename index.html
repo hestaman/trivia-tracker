@@ -33,6 +33,8 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .muted-btn{color:var(--muted);background:transparent;padding:10px}
 .row{display:flex;gap:10px;align-items:center}
 .today-line{color:var(--muted);font-size:13px;text-align:center;margin-top:14px}
+.continue{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}.continue h3{margin:0 0 8px;font-size:15px;color:var(--soft)}
+.continue .video-card{margin:0}.continue .secondary{padding:12px 18px;min-height:44px}.more-link{display:block;margin:8px auto 0;min-height:44px;font-size:14px}
 .menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .me-chip{margin-left:auto;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:8px 14px;min-height:44px;font-weight:700;font-size:14px;color:var(--soft);max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
 .link-btn{background:none;color:var(--blue);padding:0 4px;font-weight:700}
@@ -95,7 +97,6 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .navfoot{text-align:center;color:var(--muted);font-size:12px;padding:15px 0}
 .danger-link{background:transparent;color:var(--danger-text);padding:10px}
 .discard-link{margin-top:6px;font-weight:700;min-height:44px}
-.card-remove{display:inline-block;background:transparent;color:var(--danger-text);font-size:13px;padding:10px 12px 4px 0;min-height:36px}
 .toast{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:20;max-width:520px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--text);color:var(--bg);border-radius:16px;padding:10px 10px 10px 18px;box-shadow:0 10px 30px var(--shadow);font-weight:600}
 .toast[hidden]{display:none}.toast.plain button{display:none}
 .form-error{color:var(--danger-text);font-size:14px;font-weight:600;margin:0 0 12px}.form-error:empty{display:none}.toast button{background:transparent;color:var(--toast-action);font-weight:800;padding:10px 14px;min-height:44px;border-radius:12px}
@@ -116,10 +117,10 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 <section id="home" class="screen active">
   <div class="panel">
     <h2 class="eyebrow" id="dateLabel">Today</h2>
-    <div id="continueList"></div>
     <button class="primary" id="startBtn" style="margin-top:14px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start a new game</button>
     <button class="secondary finish" id="joinBtn">Join a shared game</button>
     <div class="today-line" id="todayLine"></div>
+    <div id="continueList"></div>
   </div>
   <nav class="menu">
     <button id="menuHistory"><span class="ico"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/><path d="M3 21h18"/></svg></span>Game History</button>
@@ -408,20 +409,26 @@ function showSummary({id,title,answers,total,stopped}){
 function inProgressShared(s){return !s.stopped&&(s.answers||[]).length<(s.total_questions||Infinity)}
 function renderHome(){
   $('dateLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
-  const paused=sessions.filter(s=>!s.finished).slice(-3).reverse();
-  const live=shared.filter(s=>s.joined_at&&localDay(s.joined_at)===today()&&inProgressShared(s)).slice(-3).reverse();
-  $('continueList').innerHTML=[
-    ...paused.map(s=>{const n=counts(s);return `<div class="video-card" style="margin-top:12px"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}</div><div class="meta">Paused · ${n.answered} of ${s.total} answered</div><button class="card-remove" data-remove-solo="${escapeHtml(s.id)}">Remove</button></div><button class="secondary" data-resume="${s.id}">Resume</button></div></div>`}),
-    ...live.map(s=>`<div class="video-card" style="margin-top:12px"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.video_title||'Shared game')}<span class="tag">Shared</span></div><div class="meta">${(s.answers||[]).length} of ${s.total_questions||'?'} answered</div><button class="card-remove" data-remove-shared="${escapeHtml(s.player_token)}">Remove</button></div><button class="secondary" data-resume-shared="${escapeHtml(s.player_token)}">Resume</button></div></div>`)
-  ].join('');
+  // One "pick up where you left off" card (the most recent unfinished game); the rest live in History
+  const open=[
+    ...sessions.filter(s=>!s.finished).map(s=>({kind:"solo",s,when:s.updatedAt||Number(s.id)||0})),
+    ...shared.filter(s=>s.joined_at&&localDay(s.joined_at)===today()&&inProgressShared(s)).map(s=>({kind:"shared",s,when:s.updatedAt||Date.parse(s.joined_at)||0}))
+  ].sort((x,y)=>y.when-x.when);
+  let html="";
+  if(open.length){
+    const {kind,s}=open[0];
+    const name=kind==="solo"?s.name:(s.video_title||"Shared game"),answered=(s.answers||[]).length,total=kind==="solo"?s.total:(s.total_questions||"?");
+    const resume=kind==="solo"?`data-resume="${escapeHtml(s.id)}"`:`data-resume-shared="${escapeHtml(s.player_token)}"`;
+    html=`<div class="continue"><h3>Pick up where you left off</h3><div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(name)}${kind==="shared"?'<span class="tag">Shared</span>':''}</div><div class="meta">${answered} of ${total} answered</div></div><button class="secondary" ${resume}>Resume</button></div></div>${open.length>1?`<button class="link-btn more-link" id="moreUnfinished">${open.length-1} more unfinished game${open.length===2?"":"s"} →</button>`:""}</div>`;
+  }
+  $("continueList").innerHTML=html;
   // Today's quick stats, from what's saved on this device
-  const day=today(),todays=sessions.filter(s=>s.date===day),todayShared=shared.filter(s=>s.joined_at&&localDay(s.joined_at)===day);
+  const day=today(),todays=sessions.filter(s=>s.date===day&&s.finished),todayShared=shared.filter(s=>s.joined_at&&localDay(s.joined_at)===day&&!inProgressShared(s)&&(s.answers||[]).length);
   const all=[...todays,...todayShared].map(counts),games=all.length,c=all.reduce((n,x)=>n+x.c,0),t=all.reduce((n,x)=>n+x.answered,0);
   $('todayLine').textContent=games?`Today: ${games} game${games===1?'':'s'} · ${pct(c,t)} correct`:'No games yet today.';
 }
 $('continueList').onclick=async e=>{
-  const rm=e.target.closest('[data-remove-solo]');if(rm){if(removeSolo(rm.dataset.removeSolo))renderHome();return}
-  const rms=e.target.closest('[data-remove-shared]');if(rms){if(await removeShared(rms.dataset.removeShared))renderHome();return}
+  if(e.target.closest('#moreUnfinished'))return $('menuHistory').click();
   const b=e.target.closest('[data-resume]');if(b)return openSession(b.dataset.resume);
   const s=e.target.closest('[data-resume-shared]');if(s){const g=shared.find(x=>x.player_token===s.dataset.resumeShared);if(g)enterShared(g)}
 };

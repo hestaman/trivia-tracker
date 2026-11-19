@@ -82,6 +82,7 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .mark-c{color:var(--gold)}.mark-w{color:var(--muted)}.mark-skip{color:var(--track)}
 @keyframes markIn{from{opacity:0;transform:scale(.3) translateY(4px)}}
 .summary-compare{text-align:center;color:var(--muted);font-size:15px;margin:12px 0 4px;min-height:1.4em}
+.center{text-align:center}.summary-undo{min-height:44px;padding:10px 14px;font-size:15px;color:var(--muted)}
 .summary-compare b{color:var(--text)}.summary-compare .best{color:var(--gold);font-weight:800}
 .summary-compare.reveal{animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--after)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
@@ -131,7 +132,7 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 <section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div></section>
 
 <!-- RESULTS (solo finish, or any stopped game) -->
-<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><button class="primary finish" id="anotherBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start another game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
+<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><div class="center"><button class="link-btn summary-undo" id="summaryUndo" hidden>↶ Undo last answer</button></div><button class="primary finish" id="anotherBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start another game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
 
 <!-- SHARED GAME -->
 <section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">LIVE</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
@@ -362,8 +363,12 @@ function verdictFor(p){return p>=100?'Perfect game!':p>=80?'Sharp as a tack.':p>
 // Your other complete solo games, oldest first, as percentages
 function pastScores(exceptId){return sessions.filter(s=>s.finished&&!s.stopped&&s.total&&s.id!==exceptId).sort((a,b)=>soloTime(a)-soloTime(b)).map(s=>Math.round(counts(s).c/s.total*100))}
 let countTimer=null;
+let summaryId=null;
 function showSummary({id,title,answers,total,stopped}){
   backupSoon();
+  // Solo games can be reopened from here: a slip on the last question, or stopped by mistake
+  summaryId=id||null;$('summaryUndo').hidden=!id||!(answers||[]).length;
+  $('summaryUndo').textContent=stopped?'↶ Keep playing this game':'↶ Undo last answer';
   const a=answers||[],c=a.filter(x=>x==='c').length,answered=a.filter(x=>x==='c'||x==='w').length;
   const out=stopped?answered:total,p=out?Math.round(c/out*100):0;
   const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -422,6 +427,12 @@ $('continueList').onclick=async e=>{
 };
 
 // ---------- Solo game ----------
+$('summaryUndo').onclick=()=>{
+  const s=sessions.find(x=>x.id===summaryId);if(!s)return;
+  if(!s.stopped)s.answers.pop();
+  s.finished=false;s.stopped=false;delete s.completedAt;touch(s);save(KEY,sessions);clearInterval(countTimer);
+  openSession(s.id);
+};
 function openSession(id){activeId=id;if(!sessions.find(x=>x.id===id))return;switchScreen('play');renderPlay()}
 function renderPlay(){
   const s=sessions.find(x=>x.id===activeId);if(!s)return;const n=counts(s);

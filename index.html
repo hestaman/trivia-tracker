@@ -5,14 +5,14 @@
 :root{color-scheme:dark;--radius:20px;
   --bg-top:#111827;--bg:#0c111b;--panel:#171f2e;--panel2:#202b3c;--field:#0f1724;--line:#2b394b;--track:#293446;
   --text:#f4f7fb;--soft:#d3dce8;--muted:#9aabc0;--blue:#a5a8ff;--gold:#f5b301;--green:#27c475;--danger-text:#f07b80;
-  --primary-bg:#7c7ff7;--primary-text:#ffffff;
+  --primary-bg:#5b5ff0;--primary-text:#ffffff;--focus-ring:#a5a8ff55;
   --info-bg:#1f1d47;--info-text:#c9cbff;--info-line:#3b3a7a;--pill-bg:#2a2860;
   --ok-bg:#173c2e;--ok-text:#8ee6b9;--warn-bg:#3d2a1a;--warn-text:#ffc68a;--warn-line:#5a3a2a;--you-bg:#2a2550;--you-text:#c9bfff;
   --toast-action:#4338ca;--shadow:#0002;--overlay:#0009}
 @media (prefers-color-scheme: light){:root{color-scheme:light;
   --bg-top:#e9eef7;--bg:#f4f6fa;--panel:#ffffff;--panel2:#eef2f7;--field:#ffffff;--line:#d5dde8;--track:#dde4ee;
-  --text:#142033;--soft:#33425a;--muted:#5d6b80;--blue:#4338ca;--gold:#a86b00;--green:#138a52;--danger-text:#c8323b;
-  --primary-bg:#4338ca;--primary-text:#ffffff;
+  --text:#142033;--soft:#33425a;--muted:#5d6b80;--blue:#4338ca;--gold:#a86b00;--green:#117a48;--danger-text:#c8323b;
+  --primary-bg:#4338ca;--primary-text:#ffffff;--focus-ring:#4338ca33;
   --info-bg:#eceafd;--info-text:#3730a3;--info-line:#c7c3f4;--pill-bg:#e4e1fb;
   --ok-bg:#dcf3e7;--ok-text:#146c43;--warn-bg:#fdebd8;--warn-text:#9a4f0b;--warn-line:#f0c9a0;--you-bg:#ebe7fd;--you-text:#4b3aa8;
   --toast-action:#f5b301;--shadow:#1a2a4412;--overlay:#0f172a66}}
@@ -25,7 +25,7 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .header h1{font-size:23px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.3px}.header h1 span{color:var(--gold)}
 .header p{margin:4px 0 0;color:var(--muted);font-size:13px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px var(--shadow)}
-.eyebrow{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700}
+.eyebrow{color:var(--soft);font-size:15px;font-weight:800;margin:0}
 .daily{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
 .stat{background:var(--panel2);border-radius:15px;padding:14px}.stat strong{font-size:28px;display:block;line-height:1.2}.stat span{font-size:12px;color:var(--muted)}
 .primary{background:var(--primary-bg);color:var(--primary-text);border-radius:16px;font-weight:800;padding:16px;width:100%;font-size:17px}
@@ -34,7 +34,7 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .row{display:flex;gap:10px;align-items:center}
 .today-line{color:var(--muted);font-size:13px;text-align:center;margin-top:14px}
 .menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.me-chip{margin-left:auto;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:8px 12px;font-weight:700;font-size:13px;color:var(--soft);max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.me-chip{margin-left:auto;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:8px 14px;min-height:44px;font-weight:700;font-size:14px;color:var(--soft);max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
 .link-btn{background:none;color:var(--blue);padding:0 4px;font-weight:700}
 .name-show{background:var(--field);border:1px solid var(--line);border-radius:13px;padding:14px}
 .sheet .sub-title{font-size:15px;font-weight:800;margin:20px 0 4px}
@@ -46,7 +46,10 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sync-status{font-size:14px;color:var(--muted);margin-top:6px;font-weight:600}.sync-status:empty{display:none}.sync-status.ok{color:var(--ok-text)}.sync-status.err{color:var(--warn-text)}
 .menu button{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:700;font-size:14px}
-.menu .ico{font-size:26px;line-height:1}
+.menu .ico{line-height:0;color:var(--blue)}.menu .ico .i{width:28px;height:28px}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}
+.primary,.stop-btn,.me-chip{display:inline-flex;align-items:center;justify-content:center;gap:8px}.me-chip .i{width:16px;height:16px}
+.answer .symbol .i{width:36px;height:36px;stroke-width:2.8}
 .section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:16px;margin:0}.section-title small{color:var(--muted)}
 .video-card{padding:14px;background:var(--panel2);border-radius:16px;margin:10px 0}.video-card:first-child{margin-top:0}.video-card:last-child{margin-bottom:0}
 .video-title{font-weight:700;overflow-wrap:anywhere}.meta{font-size:13px;color:var(--muted);margin-top:5px}
@@ -54,16 +57,18 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:99px;background:var(--pill-bg);color:var(--info-text);font-weight:700;margin-left:6px;vertical-align:1px}.tag.stop{background:var(--warn-bg);color:var(--warn-text)}.tag.done{background:var(--ok-bg);color:var(--ok-text)}.tag.you{background:var(--you-bg);color:var(--you-text)}
 .empty{color:var(--muted);text-align:center;padding:24px 8px}
 .screen{display:none}.screen.active{display:block}
-.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.back{background:transparent;color:var(--muted);padding:8px 0}
+.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.back{background:transparent;color:var(--muted);padding:10px 12px 10px 0;min-height:44px}
 .progress-track{height:9px;background:var(--track);border-radius:9px;overflow:hidden;margin:12px 0 20px}.progress-fill{height:100%;background:var(--blue);width:0;transition:width .2s}
 .big-number{text-align:center;font-size:42px;font-weight:900;margin:6px 0}.sub{text-align:center;color:var(--muted);margin-bottom:18px}
 .answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.answer{color:#fff;min-height:116px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{font-size:34px}
+.answer{color:#fff;min-height:116px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{line-height:0}
 .correct{background:linear-gradient(150deg,#1e9d61,#147244)}.wrong{background:linear-gradient(150deg,#d64b53,#9d3238)}
 .finish{width:100%;margin-top:12px}
 .stop-btn{width:100%;margin-top:12px;background:transparent;border:1px solid var(--warn-line);color:var(--warn-text);border-radius:14px;padding:12px;font-weight:700}
 .form-field{margin:15px 0}.form-field label{display:block;font-weight:700;margin-bottom:7px}
-.form-field input,.form-field select{width:100%;background:var(--field);border:1px solid var(--line);border-radius:13px;padding:14px;color:var(--text);outline:none}
+.form-field input,.form-field select{width:100%;background:var(--field);border:1px solid var(--line);border-radius:13px;padding:14px;color:var(--text);outline:none}.form-field input:focus,.form-field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--focus-ring)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:12px}.form-field :focus-visible{outline:none}
+::selection{background:var(--focus-ring)}
 .dialog{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:10}.dialog.open{display:flex}
 .sheet{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:22px;width:min(520px,100%);box-shadow:0 20px 60px var(--shadow)}.sheet h2{margin:0 0 6px}.sheet p{color:var(--muted);margin:0 0 10px}
 .stack{display:grid;gap:10px;margin-top:16px}.danger{background:#c8323b;color:#fff;border-radius:16px;font-weight:800;padding:14px}
@@ -104,37 +109,37 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 .help h3{font-size:16px;margin:18px 0 6px}.help h3:first-child{margin-top:0}.help p,.help li{color:var(--soft);line-height:1.5;margin:0 0 6px}.help ul{padding-left:20px;margin:0}
 @media(min-width:520px){body{padding:20px}.app{padding-top:8px}}
 </style></head><body><main class="app">
-<header class="header"><img class="logo" src="icon.svg?v=2" alt=""><div><h1>Think <span>Tank</span></h1><p>Make your mark.<br>Know your score.</p></div><button class="me-chip" id="meBtn" title="Your name and backup">👤 <span id="meLabel">You</span></button></header>
+<header class="header"><img class="logo" src="icon.svg?v=2" alt=""><div><h1>Think <span>Tank</span></h1><p>Make your mark.<br>Know your score.</p></div><button class="me-chip" id="meBtn" title="Your name and backup" aria-label="Your name and backup"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span id="meLabel">You</span></button></header>
 
 <!-- HOME: start a game, plus a small menu for everything else -->
 <section id="home" class="screen active">
   <div class="panel">
-    <div class="eyebrow" id="dateLabel">TODAY</div>
+    <h2 class="eyebrow" id="dateLabel">Today</h2>
     <div id="continueList"></div>
-    <button class="primary" id="startBtn" style="margin-top:14px">＋ &nbsp;Start New Game</button>
+    <button class="primary" id="startBtn" style="margin-top:14px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start a new game</button>
     <button class="secondary finish" id="joinBtn">Join a shared game</button>
     <div class="today-line" id="todayLine"></div>
   </div>
   <nav class="menu">
-    <button id="menuHistory"><span class="ico">📊</span>Game History</button>
-    <button id="menuPlayers"><span class="ico">👥</span>Players</button>
-    <button id="menuHelp"><span class="ico">❔</span>Help</button>
+    <button id="menuHistory"><span class="ico"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V11M12 19V5M19 19v-6"/><path d="M3 21h18"/></svg></span>Game History</button>
+    <button id="menuPlayers"><span class="ico"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19c.9-3.2 3-5 5.5-5s4.6 1.8 5.5 5"/><circle cx="16.5" cy="9.5" r="2.6"/><path d="M16 14.2c2.3.1 3.9 1.7 4.6 4.3"/></svg></span>Players</button>
+    <button id="menuHelp"><span class="ico"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.7"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg></span>Help</button>
   </nav>
 </section>
 
 <!-- SOLO GAME -->
-<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn">■ &nbsp;Stop game</button></div></section>
+<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div></section>
 
 <!-- RESULTS (solo finish, or any stopped game) -->
-<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><button class="primary finish" id="anotherBtn">＋ &nbsp;Start Another Game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
+<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><button class="primary finish" id="anotherBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start another game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
 
 <!-- SHARED GAME -->
-<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">LIVE</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn">■ &nbsp;Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
+<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">LIVE</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
 
 <!-- GAME HISTORY -->
 <section id="history" class="screen">
   <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">GAME HISTORY</span></div>
-  <div class="panel"><div class="eyebrow">Lifetime stats</div><div class="daily" style="margin-bottom:0"><div class="stat"><strong id="totalQuestions">0</strong><span>Questions answered</span></div><div class="stat"><strong id="lifetimeAccuracy">—</strong><span>Overall accuracy</span></div><div class="stat"><strong id="lifetimeVideos">0</strong><span>Games completed</span></div><div class="stat"><strong id="bestScore">—</strong><span>Best game score</span></div></div></div>
+  <div class="panel"><h3 class="eyebrow">Lifetime stats</h3><div class="daily" style="margin-bottom:0"><div class="stat"><strong id="totalQuestions">0</strong><span>Questions answered</span></div><div class="stat"><strong id="lifetimeAccuracy">—</strong><span>Overall accuracy</span></div><div class="stat"><strong id="lifetimeVideos">0</strong><span>Games completed</span></div><div class="stat"><strong id="bestScore">—</strong><span>Best game score</span></div></div></div>
   <div class="section-title"><h2>Past games</h2><small id="historyCount"></small></div>
   <div id="historyList" class="panel"><div class="empty">Loading…</div></div>
   <button class="danger-link" id="clearHistory">Clear solo history</button>
@@ -143,7 +148,7 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 <!-- PLAYERS (address book) -->
 <section id="players" class="screen">
   <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">PLAYERS</span></div>
-  <div class="panel"><div class="eyebrow">Recent players · last 90 days</div><p class="meta" style="margin:8px 0 12px">People you've played shared games with show up here on their own. Only their names are saved, on this phone. Anyone you haven't played with in 90 days drops off. To invite someone, start a shared game and tap their name.</p><div id="savedPlayers"></div></div>
+  <div class="panel"><h3 class="eyebrow">Recent players · last 90 days</h3><p class="meta" style="margin:8px 0 12px">People you've played shared games with show up here on their own. Only their names are saved, on this phone. Anyone you haven't played with in 90 days drops off. To invite someone, start a shared game and tap their name.</p><div id="savedPlayers"></div></div>
 </section>
 
 <!-- HELP -->
@@ -170,11 +175,11 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
     <h3>Recent players</h3>
     <p>No sign-up needed. People you play shared games with are remembered by first name for 90 days. In a shared game, tap a name under <b>Invite a recent player</b> and pick them in Messages. Their phone number comes from your phone's contacts, not this app.</p>
     <h3>Back up your games</h3>
-    <p>Your games are backed up online automatically whenever a game ends. Tap <b>👤</b> at the top to see your backup link. Save it in a note or your password manager. If your browser data is ever cleared, open that link to get your games back. It works on any device.</p>
+    <p>Your games are backed up online automatically whenever a game ends. Tap <b>your name</b> at the top right to see your backup link. Save it in a note or your password manager. If your browser data is ever cleared, open that link to get your games back. It works on any device.</p>
     <h3>See past scores</h3>
     <p>Tap <b>Game History</b>. For a game you played with friends, tap <b>See everyone's scores</b>. To get rid of one game, like one you forgot to finish, tap <b>Remove from history</b> on it.</p>
     <h3>Where your scores are kept</h3>
-    <p>Shared games are saved online. Solo games are saved on this device and backed up online when each game ends. Keep your backup link (tap <b>👤</b>) so you can get them back.</p>
+    <p>Shared games are saved online. Solo games are saved on this device and backed up online when each game ends. Keep your backup link (tap your name at the top right) so you can get them back.</p>
     <h3>Put it on your home screen</h3>
     <p>On iPhone, open the app in Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</p>
   </div>
@@ -182,7 +187,7 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 
 <footer class="navfoot">Scores are backed up online when each game ends.</footer></main>
 
-<div class="dialog" id="startDialog"><div class="sheet"><h2>New trivia game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm"><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><p class="form-error" id="startError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="startSubmit">Start</button></div></form></div></div>
+<div class="dialog" id="startDialog"><div class="sheet"><h2>Start a new game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm"><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><p class="form-error" id="startError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="startSubmit">Start</button></div></form></div></div>
 <div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm"><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><div class="name-show" id="joinNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="joinName">Change</button></div><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><p class="form-error" id="joinError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="joinSubmit">Join game</button></div></form></div></div>
 <div class="dialog" id="confirmDialog"><div class="sheet"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="row"><button class="secondary" id="confirmCancel" style="flex:1">Cancel</button><button class="danger" id="confirmOk" style="flex:1"></button></div></div></div>
 <div class="dialog" id="meDialog"><div class="sheet me-sheet">
@@ -226,15 +231,41 @@ function save(k,v){localStorage.setItem(k,JSON.stringify(v));if(SYNCED_KEYS.incl
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function localDay(iso){const d=new Date(iso);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function dateLabel(d){return new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
+function dateLabel(d){return new Date(String(d).includes('T')?d:d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
 function pct(c,t){return t?Math.round(c/t*100)+'%':'—'}
 function counts(s){const a=s.answers||[],c=a.filter(x=>x==='c').length,w=a.filter(x=>x==='w').length;return {c,w,answered:c+w}}
-function openDialog(id){$(id).classList.add('open')}
-function closeDialog(id){$(id).classList.remove('open')}
+// Pop-up sheets. Esc or a tap outside the sheet does the same as its Cancel button;
+// focus moves into the sheet, stays there, and goes back where it was afterwards.
+const CANCEL={startDialog:'cancelStart',joinDialog:'cancelJoin',confirmDialog:'confirmCancel',meDialog:'meClose',stopDialog:'stopCancel',linkDialog:'linkDone'};
+const lastFocus={};
+function openDialogs(){return [...document.querySelectorAll('.dialog.open')]}
+function focusables(el){return [...el.querySelectorAll('button,input,select,a[href],summary,[tabindex]:not([tabindex="-1"])')].filter(x=>!x.disabled&&!x.hidden&&x.offsetParent!==null)}
+function openDialog(id){
+  const d=$(id);if(d.classList.contains('open'))return;
+  lastFocus[id]=document.activeElement;d.classList.add('open');document.querySelector('main').inert=true;
+  setTimeout(()=>{if(!d.contains(document.activeElement)){const f=focusables(d.querySelector('.sheet'));(f.find(x=>x.matches('input:not([readonly]),select'))||f[0])?.focus({preventScroll:true})}},30);
+}
+function closeDialog(id){
+  const d=$(id);if(!d.classList.contains('open'))return;
+  d.classList.remove('open');if(!openDialogs().length)document.querySelector('main').inert=false;
+  const back=lastFocus[id];delete lastFocus[id];if(back&&document.contains(back)&&!openDialogs().length)back.focus({preventScroll:true});
+}
+document.querySelectorAll('.dialog').forEach(d=>{
+  const sheet=d.querySelector('.sheet'),h=sheet.querySelector('h2');
+  sheet.setAttribute('role',d.id==='confirmDialog'||d.id==='stopDialog'?'alertdialog':'dialog');sheet.setAttribute('aria-modal','true');
+  if(h){h.id=h.id||d.id+'Title';sheet.setAttribute('aria-labelledby',h.id)}
+  d.addEventListener('click',e=>{if(e.target===d)$(CANCEL[d.id])?.click()});
+});
+document.addEventListener('keydown',e=>{
+  const d=openDialogs().at(-1);if(!d)return;
+  if(e.key==='Escape'){e.preventDefault();$(CANCEL[d.id])?.click();return}
+  if(e.key==='Tab'){const f=focusables(d.querySelector('.sheet'));if(!f.length)return;const first=f[0],last=f.at(-1);
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+});
 function switchScreen(id){
   if(id!=='shared')clearInterval(pollTimer);
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  $(id).classList.add('active');window.scrollTo(0,0);
+  $(id).classList.add('active');window.scrollTo(0,0);document.querySelector('.navfoot').hidden=id!=='home';
 }
 function goHome(){switchScreen('home');renderHome();backupSoon()}
 
@@ -371,7 +402,7 @@ function showSummary({id,title,answers,total,stopped}){
 // ---------- Home ----------
 function inProgressShared(s){return !s.stopped&&(s.answers||[]).length<(s.total_questions||Infinity)}
 function renderHome(){
-  $('dateLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+  $('dateLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
   const paused=sessions.filter(s=>!s.finished).slice(-3).reverse();
   const live=shared.filter(s=>s.joined_at&&localDay(s.joined_at)===today()&&inProgressShared(s)).slice(-3).reverse();
   $('continueList').innerHTML=[
@@ -529,11 +560,11 @@ async function fetchSharedGames(){
 }
 function soloCard(s){
   const n=counts(s);let score,label;
-  if(!s.finished){score=`${n.answered} / ${s.total}`;label='Paused'}
+  if(!s.finished){score=`${n.c} / ${n.answered}`;label='so far'}
   else if(s.stopped){score=`${n.c} / ${n.answered}`;label=`Stopped · ${pct(n.c,n.answered)}`}
   else{score=`${n.c} / ${s.total}`;label=pct(n.c,s.total)}
   const status=!s.finished?'<span class="tag">Paused</span>':s.stopped?'<span class="tag stop">Stopped</span>':'';
-  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}${status}</div><div class="meta">${dateLabel(s.date)} · Solo${s.stopped?` · ${n.answered} of ${s.total} answered`:''}</div></div><div class="history-score">${score}<small>${label}</small></div></div>${!s.finished||safeUrl(s.videoUrl)?`<div class="card-actions">${videoButtonHtml(s.videoUrl)}${!s.finished?`<button class="secondary" data-resume="${s.id}">Resume</button>`:''}</div>`:''}<div class="card-foot"><button class="danger-link" data-remove-solo="${escapeHtml(s.id)}">Remove from history</button></div></div>`;
+  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}${status}</div><div class="meta">${dateLabel(s.date)} · Solo${s.stopped||!s.finished?` · ${n.answered} of ${s.total} answered`:''}</div></div><div class="history-score">${score}<small>${label}</small></div></div>${!s.finished||safeUrl(s.videoUrl)?`<div class="card-actions">${videoButtonHtml(s.videoUrl)}${!s.finished?`<button class="secondary" data-resume="${s.id}">Resume</button>`:''}</div>`:''}<div class="card-foot"><button class="danger-link" data-remove-solo="${escapeHtml(s.id)}">Remove from history</button></div></div>`;
 }
 function sharedCard({s,game,players:ps,mine}){
   const answered=Number(mine.answered||0),correct=Number(mine.correct||0),total=Number(game.total_questions||0);

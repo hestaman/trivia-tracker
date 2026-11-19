@@ -39,8 +39,12 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .name-show{background:var(--field);border:1px solid var(--line);border-radius:13px;padding:14px}
 .sheet .sub-title{font-size:15px;font-weight:800;margin:20px 0 4px}
 .tip{background:var(--info-bg);border-radius:14px;padding:14px;margin-top:14px;font-size:14px;color:var(--soft);line-height:1.45}
-.sync-link{background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px;font:13px ui-monospace,Consolas,monospace;overflow-wrap:anywhere;color:var(--info-text);margin:10px 0}
-.sync-status{font-size:13px;color:var(--muted);margin-top:10px}.sync-status.ok{color:var(--ok-text)}.sync-status.err{color:var(--warn-text)}
+.me-sheet{max-height:88vh;overflow:auto;padding-top:0}
+.sheet-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;background:var(--panel);padding:18px 0 8px;margin-bottom:2px}.sheet-head h2{margin:0}
+.head-done{font-weight:800;font-size:16px;color:var(--blue);padding:10px 4px 10px 14px;min-height:44px}
+.restore{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}.restore summary{cursor:pointer;font-weight:700;padding:10px 0;min-height:24px;color:var(--soft)}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sync-status{font-size:14px;color:var(--muted);margin-top:6px;font-weight:600}.sync-status:empty{display:none}.sync-status.ok{color:var(--ok-text)}.sync-status.err{color:var(--warn-text)}
 .menu button{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .menu .ico{font-size:26px;line-height:1}
 .section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:16px;margin:0}.section-title small{color:var(--muted)}
@@ -178,22 +182,21 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 <div class="dialog" id="startDialog"><div class="sheet"><h2>New trivia game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm"><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit">Start</button></div></form></div></div>
 <div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm"><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><div class="name-show" id="joinNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="joinName">Change</button></div><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit">Join game</button></div></form></div></div>
 <div class="dialog" id="confirmDialog"><div class="sheet"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="row"><button class="secondary" id="confirmCancel" style="flex:1">Cancel</button><button class="danger" id="confirmOk" style="flex:1"></button></div></div></div>
-<div class="dialog" id="meDialog"><div class="sheet" style="max-height:90vh;overflow:auto">
-  <h2>You</h2>
+<div class="dialog" id="meDialog"><div class="sheet me-sheet">
+  <div class="sheet-head"><h2>You</h2><button class="link-btn head-done" id="meClose">Done</button></div>
   <form id="meForm"><div class="form-field" style="margin-top:10px"><label for="meName">Your player name</label><div class="row"><input id="meName" maxlength="40" placeholder="e.g. Doug" style="flex:1;min-width:0"><button class="secondary" type="submit">Save</button></div><div class="meta">This is the name other players see. Changing it doesn't change your scores.</div></div></form>
   <div class="sub-title">Backup</div>
-  <p>Your games are backed up online automatically whenever a game ends.</p>
-  <div id="syncHasLink" hidden>
-    <p style="margin-top:8px"><b>Save your backup link</b> in a note or your password manager. If this browser's data is ever cleared, open the link to get your games back. It works on any device.</p>
-    <div class="sync-link" id="syncLink"></div>
-    <div class="row"><button class="secondary" id="syncCopy" style="flex:1">Copy link</button><button class="secondary" id="syncShare" style="flex:1">Share / save</button></div>
-    <p class="meta" style="margin-top:8px">Keep it private: anyone with this link can see your scores.</p>
-  </div>
-  <p class="meta" id="syncNoLink">Your backup link appears here after your first game.</p>
   <div class="sync-status" id="syncStatus"></div>
-  <div class="sub-title">Have a backup link?</div>
-  <form id="restoreForm"><div class="form-field" style="margin:6px 0 10px"><input id="restoreInput" autocomplete="off" placeholder="Paste your backup link"></div><button class="secondary" style="width:100%" type="submit">Restore games</button></form>
-  <button class="secondary finish" id="meClose">Done</button>
+  <div id="syncHasLink" hidden>
+    <p style="margin-top:8px">Your <b>backup link</b> brings your games back if this phone's data is ever cleared, on this or any other device. Save it in a note or your password manager.</p>
+    <div class="row"><button class="secondary" id="syncShare" style="flex:1">Save link</button><button class="secondary" id="syncCopy" style="flex:1">Copy link</button></div>
+    <p class="meta" style="margin-top:10px">Keep it private: anyone with the link can see your scores. The page address includes it too, so to invite friends use the invite button in a shared game, not your browser's Share.</p>
+  </div>
+  <details class="restore"><summary>New phone, or lost your games?</summary>
+    <p class="meta" style="margin:8px 0 0">Paste the backup link you saved. Games on this phone are kept and added to it.</p>
+    <form id="restoreForm"><div class="form-field" style="margin:8px 0 10px"><label for="restoreInput" class="visually-hidden">Backup link</label><input id="restoreInput" autocomplete="off" placeholder="Paste your backup link"></div><button class="secondary" style="width:100%" type="submit">Restore my games</button></form>
+    <div class="sync-status" id="restoreStatus" role="status"></div>
+  </details>
 </div></div>
 <div class="dialog" id="stopDialog"><div class="sheet"><h2>Stop this game?</h2><p id="stopText"></p><div class="stack"><button class="primary" id="stopSave">Save my score</button><button class="secondary" id="stopCancel">Keep playing</button><button class="danger-link discard-link" id="stopDiscard">Discard this score</button></div></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastText"></span><button type="button" id="toastUndo">Undo</button></div>
@@ -651,33 +654,39 @@ function renderSyncStatus(){
   else if(syncError==='offline'){text="You're offline. Your games will back up when you're connected again.";cls+=' err'}
   else if(syncError==='notsetup'){text="Backup isn't set up in the database yet.";cls+=' err'}
   else if(syncError){text='Last backup failed: '+syncError;cls+=' err'}
-  else if(lastBackup){text='✓ Backed up at '+lastBackup.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});cls+=' ok'}
+  else if(lastBackup){text='✓ Backup is on · last saved '+lastBackup.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});cls+=' ok'}
+  else if(syncCode){text='✓ Backup is on. Games save online when each one ends.';cls+=' ok'}
+  else text="Backup starts by itself after your first game.";
   el.textContent=text;el.className=cls;
 }
-function renderBackup(){
-  $('syncHasLink').hidden=!syncCode;$('syncNoLink').hidden=!!syncCode;
-  if(syncCode)$('syncLink').textContent=syncUrl(syncCode);
-  renderSyncStatus();
-}
+function renderBackup(){$('syncHasLink').hidden=!syncCode;renderSyncStatus()}
+// Briefly show a result on the button itself, in place of a pop-up
+function flash(btn,text){const was=btn.dataset.label||btn.textContent;btn.dataset.label=was;btn.textContent=text;clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.textContent=was},2200)}
 function useCode(code){syncCode=code;localStorage.setItem(SYNC_KEY,code);putCodeInAddressBar();renderBackup()}
 function tipDone(){localStorage.setItem(TIP_KEY,'1');$('backupTip').hidden=true}
 async function shareBackupLink(){
   const url=syncUrl(syncCode);
   if(navigator.share){try{await navigator.share({title:'My Think Tank backup link',url});tipDone()}catch{}return}
-  try{await navigator.clipboard.writeText(url);alert('Backup link copied. Paste it into a note or your password manager.')}catch{alert('Copy this link: '+url)}
-  tipDone();
+  await copyBackupLink();
 }
-$('syncCopy').onclick=async()=>{try{await navigator.clipboard.writeText(syncUrl(syncCode));alert('Backup link copied. Paste it into a note or your password manager.')}catch{alert('Copy this link: '+syncUrl(syncCode))}tipDone()};
+async function copyBackupLink(btn){
+  try{await navigator.clipboard.writeText(syncUrl(syncCode));if(btn)flash(btn,'✓ Copied');else alert('Backup link copied. Paste it into a note or your password manager.');tipDone()}
+  catch{prompt('Copy your backup link:',syncUrl(syncCode))}
+}
+$('syncCopy').onclick=()=>copyBackupLink($('syncCopy'));
 $('syncShare').onclick=shareBackupLink;
 $('tipSave').onclick=async()=>{if(!syncCode){backupSoon()}if(syncCode)await shareBackupLink()};
 $('tipLater').onclick=tipDone;
 $('restoreForm').onsubmit=async e=>{
-  e.preventDefault();const code=codeFrom($('restoreInput').value);
-  if(!code){alert("That doesn't look like a backup link.");return}
-  if(syncCode&&code!==syncCode&&!confirm('From now on this device will back up to the link you pasted. The games here will be added to it. Continue?'))return;
+  e.preventDefault();const code=codeFrom($('restoreInput').value),out=$('restoreStatus');
+  const say=(text,cls)=>{out.textContent=text;out.className='sync-status'+(cls?' '+cls:'')};
+  if(!code){say("That doesn't look like a backup link. It should end in #sync= and a long code.",'err');return}
+  if(code===syncCode){say("That's already this phone's backup link.",'ok');return}
+  if(syncCode){closeDialog('meDialog');const go=await askConfirm('Switch to this backup?','This phone will save to the link you pasted from now on. Your games on this phone are kept and added to it.','Switch backup');openDialog('meDialog');if(!go)return}
+  say('Restoring…');
   useCode(code);dirty=true;await syncNow();
-  if(syncError)alert('Could not restore yet: '+$('syncStatus').textContent);
-  else{$('restoreInput').value='';alert(`Done. This device now has ${sessions.length} solo and ${shared.length} shared games.`)}
+  if(syncError)say("Couldn't restore yet. "+$('syncStatus').textContent,'err');
+  else{$('restoreInput').value='';say(`✓ Restored. This phone now has ${sessions.length} solo and ${shared.length} shared games.`,'ok')}
 };
 
 // ---------- Your name (asked once, remembered) ----------

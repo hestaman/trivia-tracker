@@ -11,7 +11,7 @@
   --toast-action:#4338ca;--shadow:#0002;--overlay:#0009}
 @media (prefers-color-scheme: light){:root{color-scheme:light;
   --bg-top:#e9eef7;--bg:#f4f6fa;--panel:#ffffff;--panel2:#eef2f7;--field:#ffffff;--line:#d5dde8;--track:#dde4ee;
-  --text:#142033;--soft:#33425a;--muted:#5d6b80;--blue:#4338ca;--gold:#a86b00;--green:#117a48;--danger-text:#c8323b;
+  --text:#142033;--soft:#33425a;--muted:#5d6b80;--blue:#4338ca;--gold:#946000;--green:#117a48;--danger-text:#c8323b;
   --primary-bg:#4338ca;--primary-text:#ffffff;--focus-ring:#4338ca33;
   --info-bg:#eceafd;--info-text:#3730a3;--info-line:#c7c3f4;--pill-bg:#e4e1fb;
   --ok-bg:#dcf3e7;--ok-text:#146c43;--warn-bg:#fdebd8;--warn-text:#9a4f0b;--warn-line:#f0c9a0;--you-bg:#ebe7fd;--you-text:#4b3aa8;
@@ -158,19 +158,19 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
   <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">HELP</span></div>
   <div class="panel help">
     <h3>Start a game</h3>
-    <p>Tap <b>Start New Game</b>. Type the video's name and how many questions it has. Pick <b>Just me</b> to play alone, or <b>Play together</b> to play with friends.</p>
+    <p>Tap <b>Start a new game</b>. Type the video's name and how many questions it has. Pick <b>Just me</b> to play alone, or <b>Play together</b> to play with friends.</p>
     <h3>Add the video link (optional)</h3>
     <p>In the YouTube app on your phone, open the video, tap <b>Share</b>, then <b>Copy link</b>. In Think Tank, tap <b>Paste</b>. For YouTube videos the name fills in by itself, and so does the question count if the title has one. Later, tap <b>▶ Video</b> in Game History to find the video again.</p>
     <h3>Keep score</h3>
-    <p>Answer each question in your head (or out loud). Then tap <b>Correct</b> or <b>Incorrect</b>. It's on the honor system. Tapped the wrong one in a solo game? Use <b>Undo</b>.</p>
+    <p>Answer each question in your head (or out loud). Then tap <b>Correct</b> or <b>Incorrect</b>. It's on the honor system. Tapped the wrong one? Tap <b>↶ Undo question…</b> (solo) or <b>↶ Change question…</b> (with friends) just below the buttons. If it was the last question, tap <b>↶ Undo last answer</b> on the results screen.</p>
     <h3>Stop early</h3>
-    <p>Tap <b>Stop game</b> at any time. You'll be asked if you want to save your score. If you save it, your history shows how many questions you answered.</p>
+    <p>Tap <b>Stop game</b> at any time. You'll be asked if you want to save your score. If you save it, your history shows how many questions you answered. Stopped by mistake? Tap <b>↶ Keep playing this game</b> on the results screen.</p>
     <h3>Take a break</h3>
-    <p>Tap <b>‹ Home</b> to step away. Your game waits for you on the home screen. Tap <b>Resume</b> to pick up where you left off.</p>
+    <p>Tap <b>‹ Home</b> to step away. Your game waits on the home screen under <b>Pick up where you left off</b>. Tap <b>Resume</b> to carry on. Older unfinished games are in Game History.</p>
     <h3>Play with friends</h3>
     <ul>
       <li>Choose <b>Play together</b> and enter your name.</li>
-      <li>Send the invitation link by text message.</li>
+      <li>Tap <b>Invite someone</b> and send the link by text message.</li>
       <li>Your friend opens the link, types their name and taps <b>Join game</b>.</li>
       <li>Everyone taps their own answers. The scoreboard updates every few seconds.</li>
     </ul>
@@ -189,8 +189,8 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 
 <footer class="navfoot">Scores are backed up online when each game ends.</footer></main>
 
-<div class="dialog" id="startDialog"><div class="sheet"><h2>Start a new game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm"><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><p class="form-error" id="startError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="startSubmit">Start</button></div></form></div></div>
-<div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm"><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><div class="name-show" id="joinNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="joinName">Change</button></div><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><p class="form-error" id="joinError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="joinSubmit">Join game</button></div></form></div></div>
+<div class="dialog" id="startDialog"><div class="sheet"><h2>Start a new game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm" novalidate><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><p class="form-error" id="startError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="startSubmit">Start</button></div></form></div></div>
+<div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm" novalidate><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><div class="name-show" id="joinNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="joinName">Change</button></div><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><p class="form-error" id="joinError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="joinSubmit">Join game</button></div></form></div></div>
 <div class="dialog" id="confirmDialog"><div class="sheet"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="row"><button class="secondary" id="confirmCancel" style="flex:1">Cancel</button><button class="danger" id="confirmOk" style="flex:1"></button></div></div></div>
 <div class="dialog" id="meDialog"><div class="sheet me-sheet">
   <div class="sheet-head"><h2>You</h2><button class="link-btn head-done" id="meClose">Done</button></div>
@@ -448,7 +448,7 @@ function renderPlay(){
   $('qSub').textContent=`of ${s.total}`;
   $('progress').style.width=Math.min(100,n.answered/s.total*100)+'%';
   $('playCorrect').textContent=n.c;$('playWrong').textContent=n.w;
-  $('undoBtn').disabled=!s.answers.length;
+  $('undoBtn').disabled=!s.answers.length;$('undoBtn').textContent=s.answers.length?`↶ Undo question ${s.answers.length} (${s.answers.at(-1)==='c'?'Correct':'Incorrect'})`:'↶ Undo last answer';
   $('correctBtn').disabled=$('wrongBtn').disabled=n.answered>=s.total;
 }
 function answer(v){const s=sessions.find(x=>x.id===activeId);if(!s||s.answers.length>=s.total)return;s.answers.push(v);touch(s);save(KEY,sessions);renderPlay();if(s.answers.length===s.total)finishSession(false)}
@@ -681,7 +681,11 @@ function renderPlayers(){
   pruneRecent();const el=$('savedPlayers');
   el.innerHTML=recent.length?recent.map((p,i)=>`<div class="video-card"><div class="history-row"><div><div class="video-title">${escapeHtml(p.name)}</div><div class="meta">Last played ${daysAgo(p.last)}</div></div><button class="muted-btn" data-remove-player="${i}">Remove</button></div></div>`).join(''):'<div class="empty" style="padding:8px">No recent players yet. Play a shared game and the people you play with will show up here.</div>';
 }
-$('savedPlayers').onclick=e=>{const b=e.target.closest('[data-remove-player]');if(b){const p=recent[Number(b.dataset.removePlayer)];if(p)forget('r:'+p.name.toLowerCase()+'@'+p.last);recent.splice(Number(b.dataset.removePlayer),1);save(RECENT_KEY,recent);backupSoon();renderPlayers()}};
+$('savedPlayers').onclick=e=>{const b=e.target.closest('[data-remove-player]');if(!b)return;
+  const i=Number(b.dataset.removePlayer),p=recent[i];if(!p)return;const key='r:'+p.name.toLowerCase()+'@'+p.last;
+  recent.splice(i,1);save(RECENT_KEY,recent);renderPlayers();
+  removeWithUndo(`${p.name} removed`,key,()=>{recent.splice(Math.min(i,recent.length),0,p);save(RECENT_KEY,recent);renderPlayers()},()=>{forget(key);backupSoon()});
+};
 // Shared game screen: one-tap invites for recent players who haven't joined this game yet
 function renderInviteChips(ps){
   const inGame=new Set(ps.map(p=>String(p.display_name||'').trim().toLowerCase()));
@@ -711,7 +715,7 @@ function mergeBackup(d){
   if(gone.size!==deleted.length){deleted=[...gone].slice(-2000);changed=true}
   for(const r of d.sessions||[]){if(!r||!r.id||held.has('s:'+r.id))continue;const l=sessions.find(x=>x.id===r.id);if(!l){sessions.push(r);changed=true}else if(newer(r,l)){Object.assign(l,r);changed=true}}
   for(const r of d.shared||[]){if(!r||!r.player_token||held.has('p:'+r.player_token))continue;const l=shared.find(x=>x.player_token===r.player_token);if(!l){shared.push(r);changed=true}else if(newer(r,l)){Object.assign(l,r);changed=true}}
-  for(const r of d.recent||[]){if(!r||!r.name)continue;const n=r.name.toLowerCase();if(gone.has('r:'+n+'@'+r.last))continue;const l=recent.find(x=>x.name.toLowerCase()===n);if(!l){recent.push(r);changed=true}else if(r.last>l.last){l.last=r.last;changed=true}}
+  for(const r of d.recent||[]){if(!r||!r.name)continue;const n=r.name.toLowerCase();if(held.has('r:'+n+'@'+r.last))continue;if(gone.has('r:'+n+'@'+r.last))continue;const l=recent.find(x=>x.name.toLowerCase()===n);if(!l){recent.push(r);changed=true}else if(r.last>l.last){l.last=r.last;changed=true}}
   const before=sessions.length+shared.length+recent.length;
   sessions=sessions.filter(s=>!gone.has('s:'+s.id));shared=shared.filter(s=>!gone.has('p:'+s.player_token));
   recent=recent.filter(r=>!gone.has('r:'+r.name.toLowerCase()+'@'+r.last));
@@ -851,7 +855,8 @@ $('startForm').onsubmit=async e=>{
   const rawUrl=$('videoUrl').value.trim(),videoUrl=safeUrl(rawUrl);
   formError('startError');
   if(rawUrl&&!videoUrl){formError('startError',"That video link doesn't look right. It should start with https://");return}
-  if(!name||!Number.isInteger(total)||total<1||total>500)return;
+  if(!name){formError('startError','Type the video name, or paste a YouTube link to fill it in.');$('videoName').focus();return}
+  if(!Number.isInteger(total)||total<1||total>500){formError('startError','Enter how many questions the video has (1 to 500).');$('questionCount').focus();return}
   if(mode==='shared'){
     const pn=$('hostName').value.trim();if(!pn){$('hostName').hidden=false;$('hostNameShow').hidden=true;formError('startError','Type your player name so the others know who you are.');$('hostName').focus();return}
     $('startSubmit').disabled=true;
@@ -866,6 +871,8 @@ $('startForm').onsubmit=async e=>{
 };
 $('joinBtn').onclick=()=>{renderName();openDialog('joinDialog')};$('cancelJoin').onclick=()=>closeDialog('joinDialog');
 $('joinForm').onsubmit=async e=>{e.preventDefault();formError('joinError');
+  if(!$('inviteCode').value.trim()){formError('joinError','Paste the invitation link or code you were sent.');$('inviteCode').focus();return}
+  if(!$('joinName').value.trim()){$('joinName').hidden=false;$('joinNameShow').hidden=true;formError('joinError','Type your name so the others know who you are.');$('joinName').focus();return}
   const raw=$('inviteCode').value.trim(),m=raw.match(/invite=([^&#\s]+)/),code=m?decodeURIComponent(m[1]):raw;
   try{$('cancelJoin').disabled=$('joinSubmit').disabled=true;await joinShared(code,$('joinName').value.trim());closeDialog('joinDialog')}
   catch(err){formError('joinError',"Couldn't join. "+friendlyError(err))}finally{$('cancelJoin').disabled=$('joinSubmit').disabled=false}};

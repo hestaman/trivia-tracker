@@ -63,9 +63,21 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .dialog{position:fixed;inset:0;background:var(--overlay);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index:10}.dialog.open{display:flex}
 .sheet{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:22px;width:min(520px,100%);box-shadow:0 20px 60px var(--shadow)}.sheet h2{margin:0 0 6px}.sheet p{color:var(--muted);margin:0 0 10px}
 .stack{display:grid;gap:10px;margin-top:16px}.danger{background:#c8323b;color:#fff;border-radius:16px;font-weight:800;padding:14px}
-.summary-score{font-size:46px;font-weight:900;text-align:center;margin:8px}.summary-pct{text-align:center;color:var(--green);font-weight:800;font-size:18px}
+.summary-title{margin:4px 0 0;text-align:center;font-size:20px;overflow-wrap:anywhere;text-wrap:balance}
+.summary-score{font-size:64px;font-weight:900;text-align:center;margin:10px 0 2px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;transition:color .4s}
+.summary-score.gold{color:var(--gold)}
+.summary-verdict{text-align:center;font-weight:800;font-size:18px;color:var(--soft)}#summaryPct{color:var(--text)}
+.marks{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:18px auto 4px;max-width:360px}
+.marks svg{width:20px;height:20px;animation:markIn .36s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i) * var(--step))}
+.marks.small svg{width:12px;height:12px}.marks.small{gap:3px}
+.mark-c{color:var(--gold)}.mark-w{color:var(--muted)}.mark-skip{color:var(--track)}
+@keyframes markIn{from{opacity:0;transform:scale(.3) translateY(4px)}}
+.summary-compare{text-align:center;color:var(--muted);font-size:15px;margin:12px 0 4px;min-height:1.4em}
+.summary-compare b{color:var(--text)}.summary-compare .best{color:var(--gold);font-weight:800}
+.summary-compare.reveal{animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--after)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){.marks svg,.summary-compare.reveal{animation:none}.summary-score{transition:none}}
 .summary-note{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
-.summary-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.summary-stats .stat{text-align:center}.summary-stats .stat strong{font-size:25px}
 .history-row{display:flex;justify-content:space-between;gap:12px;align-items:center}.history-score{font-weight:800;text-align:right;white-space:nowrap}.history-score small{display:block;color:var(--muted);font-weight:500}
 .card-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;margin-top:6px}.card-foot .danger-link{padding:8px 0 0;font-size:14px}
 .card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.card-actions .secondary{flex:1;padding:10px;font-size:14px}
@@ -107,7 +119,7 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 <section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><div class="eyebrow" id="playTitle">VIDEO</div><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn">■ &nbsp;Stop game</button></div></section>
 
 <!-- RESULTS (solo finish, or any stopped game) -->
-<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><div class="eyebrow" id="summaryTitle">RESULTS</div><div class="summary-score" id="summaryScore">0 / 0</div><div class="summary-pct" id="summaryPct">0%</div><div class="summary-note" id="summaryNote"></div><div class="summary-stats"><div class="stat"><strong id="summaryCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="summaryWrong">0</strong><span>Incorrect</span></div></div><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div><button class="primary finish" id="anotherBtn">＋ &nbsp;Start Another Game</button><button class="secondary finish" id="summaryDone">Back to Home</button></div></section>
+<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><button class="primary finish" id="anotherBtn">＋ &nbsp;Start Another Game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
 
 <!-- SHARED GAME -->
 <section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">SHARED GAME</span></div><div class="panel"><div class="eyebrow">SHARED TRIVIA GAME</div><h2 id="sharedTitle" style="margin:8px 0">Game</h2><div id="sharedVideo"></div><div class="sub" id="sharedProgress" style="text-align:left;margin-bottom:0">Question 1</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice">Your answers sync with the group.</div><div id="scoreboard"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="shareAgain">Share invitation link</button><div id="inviteRecent"></div><button class="stop-btn" id="sharedStopBtn">■ &nbsp;Stop game</button></div></section>
@@ -276,16 +288,50 @@ $('stopCancel').onclick=()=>{closeDialog('stopDialog');stopHandlers=null};
 $('stopSave').onclick=async()=>{closeDialog('stopDialog');const h=stopHandlers;stopHandlers=null;if(h)await h.onSave()};
 $('stopDiscard').onclick=async()=>{closeDialog('stopDialog');const h=stopHandlers;stopHandlers=null;if(h)await h.onDiscard()};
 
-function showSummary({title,c,w,total,stopped}){
-  backupSoon();$('backupTip').hidden=!!localStorage.getItem(TIP_KEY);
-  const answered=c+w;
+// ---------- Results screen ----------
+// Your marks land one by one and the score counts up with them, then it tells you how this
+// game compares with your own best. Bigger reactions are saved for bigger scores.
+const MARK_SVG={c:'<svg class="mark-c" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  w:'<svg class="mark-w" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5l6 6M11 5l-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  skip:'<svg class="mark-skip" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.5" fill="currentColor"/></svg>'};
+function verdictFor(p){return p>=100?'Perfect game!':p>=80?'Sharp as a tack.':p>=60?'Solid round.':p>=40?'Not bad at all.':'Tough one. Rematch?'}
+// Your other complete solo games, oldest first, as percentages
+function pastScores(exceptId){return sessions.filter(s=>s.finished&&!s.stopped&&s.total&&s.id!==exceptId).sort((a,b)=>soloTime(a)-soloTime(b)).map(s=>Math.round(counts(s).c/s.total*100))}
+let countTimer=null;
+function showSummary({id,title,answers,total,stopped}){
+  backupSoon();
+  const a=answers||[],c=a.filter(x=>x==='c').length,answered=a.filter(x=>x==='c'||x==='w').length;
+  const out=stopped?answered:total,p=out?Math.round(c/out*100):0;
+  const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
   $('summaryTitle').textContent=title;
   $('summaryPill').textContent=stopped?'GAME STOPPED':'GAME COMPLETE';
   $('summaryPill').className='pill '+(stopped?'stop':'done');
-  $('summaryScore').textContent=stopped?`${c} / ${answered}`:`${c} / ${total}`;
-  $('summaryPct').textContent=pct(c,stopped?answered:total)+' correct';
+  $('summaryPct').textContent=p+'% correct';
+  $('summaryVerdict').textContent=answered?verdictFor(p):'No answers yet.';
   $('summaryNote').textContent=stopped?`Stopped after ${answered} of ${total} questions`:'';
-  $('summaryCorrect').textContent=c;$('summaryWrong').textContent=w;
+  // The marks: one per question, in order. Long games get smaller marks; very long ones skip them.
+  const marks=$('summaryMarks'),n=Math.max(total||0,a.length),showMarks=n<=120;
+  const step=calm||!showMarks?0:Math.min(45,700/Math.max(1,n));
+  marks.className='marks'+(n>40?' small':'');marks.style.setProperty('--step',step+'ms');
+  marks.setAttribute('aria-label',`${c} correct, ${answered-c} incorrect`);
+  marks.innerHTML=showMarks?Array.from({length:n},(_,i)=>(MARK_SVG[a[i]]||MARK_SVG.skip).replace('<svg ',`<svg style="--i:${i}" `)).join(''):'';
+  // Compare with your own record (solo games that were played to the end)
+  const past=id&&!stopped?pastScores(id):[],best=past.length?Math.max(...past):null,last=past.at(-1);
+  const isBest=best!==null&&p>best,gold=!stopped&&answered>0&&(p>=100||isBest);
+  const cmp=$('summaryCompare');
+  cmp.innerHTML=stopped||!id?'':best===null?'Your first full game. This is the score to beat.'
+    :isBest?`<span class="best">New personal best!</span> Your old best was <b>${best}%</b>.`
+    :p===best?'<span class="best">Ties your best.</span>'
+    :`Your best: <b>${best}%</b> · Last game: <b>${last}%</b>`;
+  cmp.classList.remove('reveal');void cmp.offsetWidth;cmp.style.setProperty('--after',(step*n)+'ms');cmp.classList.add('reveal');
+  // Count the score up alongside the marks
+  const score=$('summaryScore'),shown=i=>{score.textContent=`${i} / ${out}`};
+  clearInterval(countTimer);score.classList.remove('gold');
+  const finish=()=>{clearInterval(countTimer);shown(c);if(gold)score.classList.add('gold')};
+  if(!step||!c)finish();
+  else{shown(0);const t0=performance.now();countTimer=setInterval(()=>{const k=Math.floor((performance.now()-t0)/step);if(k>=n)return finish();shown(a.slice(0,k+1).filter(x=>x==='c').length)},30)}
+  // The backup reminder waits until the second game, so the first result has the screen to itself
+  $('backupTip').hidden=!!localStorage.getItem(TIP_KEY)||sessions.filter(s=>s.finished).length+shared.length<2;
   switchScreen('summary');
 }
 
@@ -327,7 +373,7 @@ function answer(v){const s=sessions.find(x=>x.id===activeId);if(!s||s.answers.le
 function finishSession(stopped){
   const s=sessions.find(x=>x.id===activeId);if(!s)return;
   s.finished=true;s.stopped=!!stopped;s.completedAt=new Date().toISOString();touch(s);save(KEY,sessions);
-  const n=counts(s);showSummary({title:s.name,c:n.c,w:n.w,total:s.total,stopped:s.stopped});
+  showSummary({id:s.id,title:s.name,answers:s.answers,total:s.total,stopped:s.stopped});
 }
 $('stopBtn').onclick=()=>{
   const s=sessions.find(x=>x.id===activeId);if(!s)return;
@@ -406,7 +452,7 @@ $('sharedStopBtn').onclick=()=>{
     async()=>{ // save score
       try{await stopOnServer(s.player_token,true)}catch(e){alert('Could not stop the game online: '+e.message);return}
       s.stopped=true;touch(s);save(SHARED_KEY,shared);clearInterval(pollTimer);
-      showSummary({title:s.video_title||'Shared game',c:n.c,w:n.w,total,stopped:true});
+      showSummary({title:s.video_title||'Shared game',answers:s.answers,total,stopped:true});
     },
     async()=>{ // throw it away
       let removedOnline=true;

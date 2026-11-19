@@ -80,7 +80,8 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .summary-verdict{text-align:center;font-weight:800;font-size:18px;color:var(--soft)}#summaryPct{color:var(--text)}
 .marks{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:18px auto 4px;max-width:360px}
 .marks svg{width:20px;height:20px;animation:markIn .36s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i) * var(--step))}
-.marks.small svg{width:12px;height:12px}.marks.small{gap:3px}
+.marks.rows{display:grid;grid-template-columns:repeat(10,auto);justify-content:center;gap:6px 6px}
+.marks.small svg{width:14px;height:14px}.marks.small{gap:5px 8px}.marks-more{color:var(--muted);font-weight:800;line-height:20px;margin-right:2px}
 .marks.live{margin:4px auto 6px}.marks.live svg{animation:none}.marks.live svg.new{animation:markIn .36s cubic-bezier(.16,1,.3,1)}
 .mark-next{color:var(--blue)}.play-tally{text-align:center;color:var(--muted);font-size:14px;font-weight:600;margin:2px 0 16px}.play-tally b{color:var(--text)}
 .marks.live:not(:empty)+.play-tally{margin-top:0}
@@ -370,13 +371,19 @@ const MARK_SVG={c:'<svg class="mark-c" viewBox="0 0 16 16" aria-hidden="true"><p
 MARK_SVG.next='<svg class="mark-next" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
 // The row of marks shown while playing: one per question, the newest pops in, the next one is a ring
 const liveLen={};
+// Short games (10 or fewer) show every question. Longer games show only your last 10 marks and the
+// current question, so the row stays one line; the progress bar shows how far through you are.
+const LIVE_WINDOW=10;
+function liveMarksAreWindowed(total){return (total||0)>LIVE_WINDOW}
 function renderLiveMarks(el,key,answers,total){
   const a=answers||[],n=Math.max(total||0,a.length),c=a.filter(x=>x==='c').length;
-  if(n>120){el.innerHTML='';return}
   const grew=a.length>(liveLen[key]??a.length);liveLen[key]=a.length;
-  el.className='marks live'+(n>40?' small':'');
+  el.className='marks live';
   el.setAttribute('aria-label',`${c} correct, ${a.length-c} incorrect, ${Math.max(0,n-a.length)} to go`);
-  el.innerHTML=Array.from({length:n},(_,i)=>{let s=MARK_SVG[a[i]]||(i===a.length?MARK_SVG.next:MARK_SVG.skip);if(grew&&i===a.length-1)s=s.replace('<svg class="','<svg class="new ');return s}).join('');
+  const mark=i=>{let s=MARK_SVG[a[i]]||(i===a.length?MARK_SVG.next:MARK_SVG.skip);if(grew&&i===a.length-1)s=s.replace('<svg class="','<svg class="new ');return s};
+  if(!liveMarksAreWindowed(n)){el.innerHTML=Array.from({length:n},(_,i)=>mark(i)).join('');return}
+  const from=Math.max(0,a.length-LIVE_WINDOW),to=Math.min(n,a.length+1),idx=[];for(let i=from;i<to;i++)idx.push(i);
+  el.innerHTML=(from>0?'<span class="marks-more" aria-hidden="true">…</span>':'')+idx.map(mark).join('');
 }
 function tallyText(answers){const a=answers||[],c=a.filter(x=>x==='c').length,w=a.length-c;return a.length?`<b>${c}</b> correct · <b>${w}</b> incorrect`:'Tap Correct or Incorrect after each question'}
 function verdictFor(p){return p>=100?'Perfect game!':p>=80?'Sharp as a tack.':p>=60?'Solid round.':p>=40?'Not bad at all.':'Tough one. Rematch?'}
@@ -399,9 +406,9 @@ function showSummary({id,title,answers,total,stopped}){
   $('summaryVerdict').textContent=answered?verdictFor(p):'No answers yet.';
   $('summaryNote').textContent=stopped?`Stopped after ${answered} of ${total} questions`:'';
   // The marks: one per question, in order. Long games get smaller marks; very long ones skip them.
-  const marks=$('summaryMarks'),n=Math.max(total||0,a.length),showMarks=n<=120;
-  const step=calm||!showMarks?0:Math.min(45,700/Math.max(1,n));
-  marks.className='marks'+(n>40?' small':'');marks.style.setProperty('--step',step+'ms');
+  const marks=$('summaryMarks'),n=Math.max(total||0,a.length),showMarks=true;
+  const step=calm?0:Math.min(45,900/Math.max(1,n));
+  marks.className='marks'+(n>10?' rows':'')+(n>40?' small':'');marks.style.setProperty('--step',step+'ms');
   marks.setAttribute('aria-label',`${c} correct, ${answered-c} incorrect`);
   marks.innerHTML=showMarks?Array.from({length:n},(_,i)=>(MARK_SVG[a[i]]||MARK_SVG.skip).replace('<svg ',`<svg style="--i:${i}" `)).join(''):'';
   // Compare with your own record (solo games that were played to the end)
@@ -466,7 +473,7 @@ function renderPlay(){
   $('qNumber').textContent=n.answered<s.total?`Question ${n.answered+1}`:'All questions answered';
   $('qSub').textContent=`of ${s.total}`;
   $('progress').style.width=Math.min(100,n.answered/s.total*100)+'%';
-  renderLiveMarks($('playMarks'),'s:'+s.id,s.answers,s.total);$('progress').parentElement.hidden=s.total<=120;
+  renderLiveMarks($('playMarks'),'s:'+s.id,s.answers,s.total);$('progress').parentElement.hidden=!liveMarksAreWindowed(s.total);
   $('playTally').innerHTML=tallyText(s.answers);
   $('undoBtn').disabled=!s.answers.length;$('undoBtn').textContent=s.answers.length?`↶ Undo question ${s.answers.length} (${s.answers.at(-1)==='c'?'Correct':'Incorrect'})`:'↶ Undo last answer';
   $('correctBtn').disabled=$('wrongBtn').disabled=n.answered>=s.total;
@@ -509,7 +516,7 @@ async function refreshShared(){
     const mine=ps.find(p=>p.player_id===activeShared.player_id);
     const answered=Number(mine?.answered||0),done=answered>=game.total_questions,stopped=activeShared.stopped||playerStopped(mine);
     $('sharedBar').style.width=Math.min(100,answered/game.total_questions*100)+'%';
-    renderLiveMarks($('sharedMarks'),'p:'+activeShared.player_token,activeShared.answers,game.total_questions);$('sharedBar').parentElement.hidden=game.total_questions<=120;
+    renderLiveMarks($('sharedMarks'),'p:'+activeShared.player_token,activeShared.answers,game.total_questions);$('sharedBar').parentElement.hidden=!liveMarksAreWindowed(game.total_questions);
     $('sharedTally').innerHTML=stopped||done?'':tallyText(activeShared.answers);
     $('sharedQ').textContent=stopped?'Game stopped':done?'All done!':`Question ${answered+1}`;
     $('sharedQSub').textContent=stopped?`You answered ${answered} of ${game.total_questions}`:done?`You answered all ${game.total_questions}`:`of ${game.total_questions}`;

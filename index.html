@@ -24,6 +24,9 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .logo{width:52px;height:52px;border-radius:15px;display:block;box-shadow:0 6px 18px #4338ca55}
 .header h1{font-size:23px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.3px}.header h1 span{color:var(--gold)}
 .header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+body:not([data-screen=home]) .header{margin:0 2px 8px;gap:10px}body:not([data-screen=home]) .header p{display:none}
+body:not([data-screen=home]) .logo{width:34px;height:34px;border-radius:10px;box-shadow:0 3px 10px #4338ca44}body:not([data-screen=home]) .header h1{font-size:19px}
+.page-title{font-size:26px;font-weight:850;letter-spacing:-.02em;margin:0 2px 14px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px var(--shadow)}
 .eyebrow{color:var(--soft);font-size:15px;font-weight:800;margin:0}
 .daily{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
@@ -63,10 +66,11 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .progress-track{height:9px;background:var(--track);border-radius:9px;overflow:hidden;margin:12px 0 20px}.progress-fill{height:100%;background:var(--blue);width:0;transition:width .2s}
 .big-number{text-align:center;font-size:42px;font-weight:900;margin:6px 0}.sub{text-align:center;color:var(--muted);margin-bottom:18px}
 .answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.answer{color:#fff;min-height:116px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{line-height:0}
+#play .panel{display:flex;flex-direction:column;min-height:calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}#play .answer-grid{margin-top:auto}#play .play-tally{margin-bottom:20px}
+.answer{color:#fff;min-height:132px;border-radius:20px;font-weight:900;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}.answer .symbol{line-height:0}
 .correct{background:linear-gradient(150deg,#1e9d61,#147244)}.wrong{background:linear-gradient(150deg,#d64b53,#9d3238)}
 .finish{width:100%;margin-top:12px}
-.stop-btn{width:100%;margin-top:12px;background:transparent;border:1px solid var(--warn-line);color:var(--warn-text);border-radius:14px;padding:12px;font-weight:700}
+.stop-btn{width:100%;margin-top:28px;background:transparent;border:1px solid var(--warn-line);color:var(--warn-text);border-radius:14px;padding:12px;font-weight:700}
 .form-field{margin:15px 0}.form-field label{display:block;font-weight:700;margin-bottom:7px}
 .form-field input,.form-field select{width:100%;background:var(--field);border:1px solid var(--line);border-radius:13px;padding:14px;color:var(--text);outline:none}.form-field input:focus,.form-field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--focus-ring)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:12px}.form-field :focus-visible{outline:none}
@@ -77,7 +81,7 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .summary-title{margin:4px 0 0;text-align:center;font-size:20px;overflow-wrap:anywhere;text-wrap:balance}
 .summary-score{font-size:64px;font-weight:900;text-align:center;margin:10px 0 2px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;transition:color .4s}
 .summary-score.gold{color:var(--gold)}
-.summary-verdict{text-align:center;font-weight:800;font-size:18px;color:var(--soft)}#summaryPct{color:var(--text)}
+.summary-verdict{text-align:center;font-weight:800;font-size:18px;color:var(--soft);min-height:1.4em}#summaryPct{color:var(--text)}#summaryPct:not(:empty)::after{content:' · ';color:var(--soft)}
 .marks{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:18px auto 4px;max-width:360px}
 .marks svg{width:20px;height:20px;animation:markIn .36s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i) * var(--step))}
 .marks.rows{display:grid;grid-template-columns:repeat(10,auto);justify-content:center;gap:6px 6px}
@@ -91,12 +95,14 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .summary-compare{text-align:center;color:var(--muted);font-size:15px;margin:12px 0 4px;min-height:1.4em}
 .center{text-align:center}.summary-undo{min-height:44px;padding:10px 14px;font-size:15px;color:var(--muted)}
 .summary-compare b{color:var(--text)}.summary-compare .best{color:var(--gold);font-weight:800}
-.summary-compare.reveal{animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--after)}
+.summary-verdict.reveal{animation:fadeUp .45s cubic-bezier(.16,1,.3,1) both}.summary-compare.reveal{animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .25s both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
-@media (prefers-reduced-motion:reduce){.marks svg,.summary-compare.reveal{animation:none}.summary-score{transition:none}}
+@media (prefers-reduced-motion:reduce){.marks svg,.summary-compare.reveal,.summary-verdict.reveal{animation:none}.summary-score{transition:none}}
 .summary-note{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
 .history-row{display:flex;justify-content:space-between;gap:12px;align-items:center}.history-score{font-weight:800;text-align:right;white-space:nowrap}.history-score small{display:block;color:var(--muted);font-weight:500}
-.card-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;margin-top:6px}.card-foot .danger-link{padding:8px 0 0;font-size:14px}
+.card-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;margin-top:2px}.card-foot .danger-link,.remove-link{padding:0;min-height:40px;font-size:14px}
+.remove-link{background:transparent;color:var(--muted);font-weight:600}
+.group-title{font-size:14px;font-weight:800;color:var(--soft);margin:4px 2px 10px}.group-title small{color:var(--muted);font-weight:600;margin-left:4px}.video-card+.group-title{margin-top:22px}
 .card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.card-actions .secondary{flex:1;padding:10px;font-size:14px}
 .players-box{margin-top:10px;border-top:1px solid var(--line);padding-top:4px}
 .navfoot{text-align:center;padding:8px 0 15px}
@@ -118,7 +124,7 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 a.secondary{text-decoration:none;text-align:center;color:inherit}
 .help h3{font-size:16px;margin:18px 0 6px}.help h3:first-child{margin-top:0}.help p,.help li{color:var(--soft);line-height:1.5;margin:0 0 6px}.help ul{padding-left:20px;margin:0}
 @media(min-width:520px){body{padding:20px}.app{padding-top:8px}}
-</style></head><body><main class="app">
+</style></head><body data-screen="home"><main class="app">
 <header class="header"><img class="logo" src="icon.svg?v=2" alt=""><div><h1>Think <span>Tank</span></h1><p>Make your mark.<br>Know your score.</p></div><button class="me-chip" id="meBtn" title="Your name and backup" aria-label="Your name and backup"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span id="meLabel">You</span></button></header>
 
 <!-- HOME: start a game, plus a small menu for everything else -->
@@ -138,17 +144,17 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 </section>
 
 <!-- SOLO GAME -->
-<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="marks live" id="playMarks" role="img"></div><div class="play-tally" id="playTally" aria-live="polite"></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div></section>
+<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">In progress</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="marks live" id="playMarks" role="img"></div><div class="play-tally" id="playTally" aria-live="polite"></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="undoBtn" hidden>↶ Change last answer</button><button class="stop-btn" id="stopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div></section>
 
 <!-- RESULTS (solo finish, or any stopped game) -->
-<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore">0 / 0</div><div class="summary-verdict" aria-live="polite"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><div class="center"><button class="link-btn summary-undo" id="summaryUndo" hidden>↶ Undo last answer</button></div><button class="primary finish" id="anotherBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start another game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
+<section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">Game complete</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore">0 / 0</div><div class="summary-verdict" id="summaryVerdictLine" aria-live="polite"><span id="summaryPct"></span><span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><div class="center"><button class="link-btn summary-undo" id="summaryUndo" hidden>↶ Undo last answer</button></div><button class="primary finish" id="anotherBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Start another game</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
 
 <!-- SHARED GAME -->
-<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">LIVE</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="marks live" id="sharedMarks" role="img"></div><div class="play-tally" id="sharedTally" aria-live="polite"></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
+<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">Live</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="marks live" id="sharedMarks" role="img"></div><div class="play-tally" id="sharedTally" aria-live="polite"></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" stroke="none"/></svg>Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
 
 <!-- GAME HISTORY -->
 <section id="history" class="screen">
-  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">GAME HISTORY</span></div>
+  <div class="topline"><button class="back" data-home>‹ Home</button></div><h2 class="page-title">History</h2>
   <div class="panel"><h3 class="eyebrow">Lifetime stats</h3><div class="daily" style="margin-bottom:0"><div class="stat"><strong id="totalQuestions">0</strong><span>Questions answered</span></div><div class="stat"><strong id="lifetimeAccuracy">—</strong><span>Overall accuracy</span></div><div class="stat"><strong id="lifetimeVideos">0</strong><span>Games completed</span></div><div class="stat"><strong id="bestScore">—</strong><span>Best game score</span></div></div></div>
   <div class="section-title"><h2>Past games</h2><small id="historyCount"></small></div>
   <div id="historyList" class="panel"><div class="empty">Loading…</div></div>
@@ -157,20 +163,20 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 
 <!-- PLAYERS (address book) -->
 <section id="players" class="screen">
-  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">PLAYERS</span></div>
+  <div class="topline"><button class="back" data-home>‹ Home</button></div><h2 class="page-title">Players</h2>
   <div class="panel"><h3 class="eyebrow">Recent players · last 90 days</h3><p class="meta" style="margin:8px 0 12px">People you've played shared games with show up here on their own. Only their names are saved, on this phone. Anyone you haven't played with in 90 days drops off. To invite someone, start a shared game and tap their name.</p><div id="savedPlayers"></div></div>
 </section>
 
 <!-- HELP -->
 <section id="help" class="screen">
-  <div class="topline"><button class="back" data-home>‹ Home</button><span class="pill">HELP</span></div>
+  <div class="topline"><button class="back" data-home>‹ Home</button></div><h2 class="page-title">Help</h2>
   <div class="panel help">
     <h3>Start a game</h3>
     <p>Tap <b>Start a new game</b>. Type the video's name and how many questions it has. Pick <b>Just me</b> to play alone, or <b>Play together</b> to play with friends.</p>
     <h3>Add the video link (optional)</h3>
     <p>In the YouTube app on your phone, open the video, tap <b>Share</b>, then <b>Copy link</b>. In Think Tank, tap <b>Paste</b>. For YouTube videos the name fills in by itself, and so does the question count if the title has one. Later, tap <b>▶ Video</b> in Game History to find the video again.</p>
     <h3>Keep score</h3>
-    <p>Answer each question in your head (or out loud). Then tap <b>Correct</b> or <b>Incorrect</b>. It's on the honor system. Tapped the wrong one? Tap <b>↶ Undo question…</b> (solo) or <b>↶ Change question…</b> (with friends) just below the buttons. If it was the last question, tap <b>↶ Undo last answer</b> on the results screen.</p>
+    <p>Answer each question in your head (or out loud). Then tap <b>Correct</b> or <b>Incorrect</b>. It's on the honor system. Tapped the wrong one? Tap <b>↶ Change question…</b> just below the buttons to flip your last answer. If it was the last question, the same button is on the results screen.</p>
     <h3>Stop early</h3>
     <p>Tap <b>Stop game</b> at any time. You'll be asked if you want to save your score. If you save it, your history shows how many questions you answered. Stopped by mistake? Tap <b>↶ Keep playing this game</b> on the results screen.</p>
     <h3>Take a break</h3>
@@ -253,7 +259,7 @@ function focusables(el){return [...el.querySelectorAll('button,input,select,a[hr
 function openDialog(id){
   const d=$(id);if(d.classList.contains('open'))return;
   lastFocus[id]=document.activeElement;d.classList.add('open');document.querySelector('main').inert=true;
-  setTimeout(()=>{if(id==='meDialog'){const s=d.querySelector('.sheet');s.tabIndex=-1;s.focus({preventScroll:true});return}if(!d.contains(document.activeElement)){const f=focusables(d.querySelector('.sheet'));(f.find(x=>x.matches('input:not([readonly]),select'))||f[0])?.focus({preventScroll:true})}},30);
+  setTimeout(()=>{if(id==='meDialog'||id==='startDialog'){const s=d.querySelector('.sheet');s.tabIndex=-1;s.focus({preventScroll:true});return}if(!d.contains(document.activeElement)){const f=focusables(d.querySelector('.sheet'));(f.find(x=>x.matches('input:not([readonly]),select'))||f[0])?.focus({preventScroll:true})}},30);
 }
 function closeDialog(id){
   const d=$(id);if(!d.classList.contains('open'))return;
@@ -275,7 +281,7 @@ document.addEventListener('keydown',e=>{
 function switchScreen(id){
   if(id!=='shared')clearInterval(pollTimer);
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  $(id).classList.add('active');window.scrollTo(0,0);document.querySelector('.navfoot').hidden=id!=='home';
+  $(id).classList.add('active');document.body.dataset.screen=id;window.scrollTo(0,0);document.querySelector('.navfoot').hidden=id!=='home';
 }
 function goHome(){switchScreen('home');renderHome();backupSoon()}
 
@@ -346,7 +352,11 @@ function friendlyError(e){
 function showLink(title,text,url){$('linkTitle').textContent=title;$('linkText').textContent=text;$('linkField').value=url;$('linkCopy').textContent='Copy link';openDialog('linkDialog');$('linkField').select()}
 $('linkDone').onclick=()=>closeDialog('linkDialog');
 $('linkCopy').onclick=async()=>{const f=$('linkField');try{await navigator.clipboard.writeText(f.value);flash($('linkCopy'),'✓ Copied')}catch{f.focus();f.select();flash($('linkCopy'),'Select & copy')}};
-function formError(id,text){$(id).textContent=text||''}
+function formError(id,text,field){
+  const box=$(id);box.textContent=text||'';
+  box.closest('.sheet')?.querySelectorAll('[aria-invalid]').forEach(x=>{x.removeAttribute('aria-invalid');x.removeAttribute('aria-describedby')});
+  if(text&&field){$(field).setAttribute('aria-invalid','true');$(field).setAttribute('aria-describedby',id)}
+}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')commitPending()});
 
 // ---------- In-app confirm (in place of the phone's plain pop-up) ----------
@@ -387,23 +397,25 @@ function renderLiveMarks(el,key,answers,total){
 }
 function tallyText(answers){const a=answers||[],c=a.filter(x=>x==='c').length,w=a.length-c;return a.length?`<b>${c}</b> correct · <b>${w}</b> incorrect`:'Tap Correct or Incorrect after each question'}
 function verdictFor(p){return p>=100?'Perfect game!':p>=80?'Sharp as a tack.':p>=60?'Solid round.':p>=40?'Not bad at all.':'Tough one. Rematch?'}
-// Your other complete solo games, oldest first, as percentages
-function pastScores(exceptId){return sessions.filter(s=>s.finished&&!s.stopped&&s.total&&s.id!==exceptId).sort((a,b)=>soloTime(a)-soloTime(b)).map(s=>Math.round(counts(s).c/s.total*100))}
+// Games are compared only with games of a similar length: a 5-question 100% isn't a fair target for a 100-question night
+const LENGTH_GROUPS=[{max:15,name:'short',range:'up to 15 questions'},{max:50,name:'medium',range:'16 to 50 questions'},{max:Infinity,name:'long',range:'51 or more questions'}];
+function lengthGroup(n){return LENGTH_GROUPS.find(g=>n<=g.max)}
+// Your other complete solo games in the same length group, oldest first, as percentages
+function pastScores(exceptId,total){const g=lengthGroup(total);return sessions.filter(s=>s.finished&&!s.stopped&&s.total&&s.id!==exceptId&&lengthGroup(s.total)===g).sort((a,b)=>soloTime(a)-soloTime(b)).map(s=>Math.round(counts(s).c/s.total*100))}
 let countTimer=null;
 let summaryId=null;
 function showSummary({id,title,answers,total,stopped}){
   backupSoon();
   // Solo games can be reopened from here: a slip on the last question, or stopped by mistake
   summaryId=id||null;$('summaryUndo').hidden=!id||!(answers||[]).length;
-  $('summaryUndo').textContent=stopped?'↶ Keep playing this game':'↶ Undo last answer';
+  const lastA=(answers||[]).at(-1);$('summaryUndo').textContent=stopped?'↶ Keep playing this game':`↶ Change question ${(answers||[]).length} to ${lastA==='c'?'Incorrect':'Correct'}`;
   const a=answers||[],c=a.filter(x=>x==='c').length,answered=a.filter(x=>x==='c'||x==='w').length;
   const out=stopped?answered:total,p=out?Math.round(c/out*100):0;
   const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
   $('summaryTitle').textContent=title;
-  $('summaryPill').textContent=stopped?'GAME STOPPED':'GAME COMPLETE';
+  $('summaryPill').textContent=stopped?'Game stopped':'Game complete';
   $('summaryPill').className='pill '+(stopped?'stop':'done');
-  $('summaryPct').textContent=p+'% correct';
-  $('summaryVerdict').textContent=answered?verdictFor(p):'No answers yet.';
+  const verdict=$('summaryVerdictLine');verdict.classList.remove('reveal');$('summaryPct').textContent='';$('summaryVerdict').textContent='';
   $('summaryNote').textContent=stopped?`Stopped after ${answered} of ${total} questions`:'';
   // The marks: one per question, in order. Long games get smaller marks; very long ones skip them.
   const marks=$('summaryMarks'),n=Math.max(total||0,a.length),showMarks=true;
@@ -412,18 +424,20 @@ function showSummary({id,title,answers,total,stopped}){
   marks.setAttribute('aria-label',`${c} correct, ${answered-c} incorrect`);
   marks.innerHTML=showMarks?Array.from({length:n},(_,i)=>(MARK_SVG[a[i]]||MARK_SVG.skip).replace('<svg ',`<svg style="--i:${i}" `)).join(''):'';
   // Compare with your own record (solo games that were played to the end)
-  const past=id&&!stopped?pastScores(id):[],best=past.length?Math.max(...past):null,last=past.at(-1);
+  const grp=lengthGroup(total||0),past=id&&!stopped?pastScores(id,total):[],best=past.length?Math.max(...past):null,last=past.at(-1);
   const isBest=best!==null&&p>best,gold=!stopped&&answered>0&&(p>=100||isBest);
   const cmp=$('summaryCompare');
-  cmp.innerHTML=stopped||!id?'':best===null?'Your first full game. This is the score to beat.'
-    :isBest?`<span class="best">New personal best!</span> Your old best was <b>${best}%</b>.`
-    :p===best?'<span class="best">Ties your best.</span>'
-    :`Your best: <b>${best}%</b> · Last game: <b>${last}%</b>`;
-  cmp.classList.remove('reveal');void cmp.offsetWidth;cmp.style.setProperty('--after',(step*n)+'ms');cmp.classList.add('reveal');
+  cmp.innerHTML=stopped||!id?'':best===null?`Your first ${grp.name} game (${grp.range}). This is the score to beat.`
+    :isBest?`<span class="best">New personal best!</span> Your old best on ${grp.name} games was <b>${best}%</b>.`
+    :p===best?`<span class="best">Ties your best ${grp.name} game.</span>`
+    :`Best ${grp.name} game: <b>${best}%</b> · Last one: <b>${last}%</b>`;
+  cmp.classList.remove('reveal');cmp.style.visibility='hidden';
   // Count the score up alongside the marks
   const score=$('summaryScore'),shown=i=>{score.textContent=`${i} / ${out}`};
   clearInterval(countTimer);score.classList.remove('gold');
-  const finish=()=>{clearInterval(countTimer);shown(c);if(gold)score.classList.add('gold')};
+  const finish=()=>{clearInterval(countTimer);shown(c);if(gold)score.classList.add('gold');
+    $('summaryPct').textContent=answered?p+'% correct':'';$('summaryVerdict').textContent=answered?verdictFor(p):'No answers yet.';
+    void verdict.offsetWidth;verdict.classList.add('reveal');cmp.style.visibility='';cmp.classList.add('reveal')};
   if(!step||!c)finish();
   else{shown(0);const t0=performance.now();countTimer=setInterval(()=>{const k=Math.floor((performance.now()-t0)/step);if(k>=n)return finish();shown(a.slice(0,k+1).filter(x=>x==='c').length)},30)}
   // The backup reminder waits until the second game, so the first result has the screen to itself
@@ -462,8 +476,9 @@ $('continueList').onclick=async e=>{
 // ---------- Solo game ----------
 $('summaryUndo').onclick=()=>{
   const s=sessions.find(x=>x.id===summaryId);if(!s)return;
-  if(!s.stopped)s.answers.pop();
-  s.finished=false;s.stopped=false;delete s.completedAt;touch(s);save(KEY,sessions);clearInterval(countTimer);
+  clearInterval(countTimer);
+  if(!s.stopped&&s.answers.length){s.answers[s.answers.length-1]=s.answers.at(-1)==='c'?'w':'c';touch(s);save(KEY,sessions);return showSummary({id:s.id,title:s.name,answers:s.answers,total:s.total,stopped:false})}
+  s.finished=false;s.stopped=false;delete s.completedAt;touch(s);save(KEY,sessions);
   openSession(s.id);
 };
 function openSession(id){activeId=id;if(!sessions.find(x=>x.id===id))return;switchScreen('play');renderPlay()}
@@ -475,7 +490,7 @@ function renderPlay(){
   $('progress').style.width=Math.min(100,n.answered/s.total*100)+'%';
   renderLiveMarks($('playMarks'),'s:'+s.id,s.answers,s.total);$('progress').parentElement.hidden=!liveMarksAreWindowed(s.total);
   $('playTally').innerHTML=tallyText(s.answers);
-  $('undoBtn').disabled=!s.answers.length;$('undoBtn').textContent=s.answers.length?`↶ Undo question ${s.answers.length} (${s.answers.at(-1)==='c'?'Correct':'Incorrect'})`:'↶ Undo last answer';
+  $('undoBtn').hidden=!s.answers.length;if(s.answers.length)$('undoBtn').textContent=`↶ Change question ${s.answers.length} to ${s.answers.at(-1)==='c'?'Incorrect':'Correct'}`;
   $('correctBtn').disabled=$('wrongBtn').disabled=n.answered>=s.total;
 }
 function answer(v){const s=sessions.find(x=>x.id===activeId);if(!s||s.answers.length>=s.total)return;s.answers.push(v);touch(s);save(KEY,sessions);renderPlay();if(s.answers.length===s.total)finishSession(false)}
@@ -489,10 +504,10 @@ $('stopBtn').onclick=()=>{
   askStop(counts(s).answered,s.total,()=>finishSession(true),()=>{const had=counts(s).answered>0;activeId=null;if(had)removeSolo(s.id,'Score discarded');else{forget('s:'+s.id);sessions=sessions.filter(x=>x.id!==s.id);save(KEY,sessions)}goHome()});
 };
 $('correctBtn').onclick=()=>answer('c');$('wrongBtn').onclick=()=>answer('w');
-$('undoBtn').onclick=()=>{const s=sessions.find(x=>x.id===activeId);if(s&&s.answers.length){s.answers.pop();s.finished=false;s.stopped=false;delete s.completedAt;touch(s);save(KEY,sessions);renderPlay()}};
+$('undoBtn').onclick=()=>{const s=sessions.find(x=>x.id===activeId);if(s&&s.answers.length){s.answers[s.answers.length-1]=s.answers.at(-1)==='c'?'w':'c';touch(s);save(KEY,sessions);renderPlay()}};
 $('exitPlay').onclick=goHome;
-$('summaryHome').onclick=$('summaryDone').onclick=goHome;
-$('anotherBtn').onclick=()=>{renderName();openDialog('startDialog');$('videoUrl').focus()};
+$('summaryHome').onclick=goHome;
+$('anotherBtn').onclick=()=>{renderName();openDialog('startDialog')};
 
 // ---------- Shared game ----------
 function inviteUrl(code){const u=new URL(location.href);u.search='';u.hash='';u.searchParams.set('invite',code);return u.toString()}
@@ -524,7 +539,7 @@ async function refreshShared(){
     $('sharedAnswerGrid').style.display=stopped||done?'none':'';
     $('sharedStopBtn').style.display=stopped||done?'none':'';
     sharedServerAnswered=answered;updateSharedButtons();
-    $('sharedStatus').textContent=stopped?'STOPPED':game.status==='completed'?'COMPLETED':'LIVE';
+    $('sharedStatus').textContent=stopped?'Stopped':game.status==='completed'?'Completed':'Live';
     activeShared.total_questions=game.total_questions;activeShared.video_title=game.video_title;save(SHARED_KEY,shared);
   }catch(e){$('sharedNotice').textContent=navigator.onLine===false?"You're offline. The scoreboard will update when you're back online.":"Can't reach the scoreboard right now. Trying again…"}
 }
@@ -611,7 +626,7 @@ function soloCard(s){
   else if(s.stopped){score=`${n.c} / ${n.answered}`;label=`Stopped · ${pct(n.c,n.answered)}`}
   else{score=`${n.c} / ${s.total}`;label=pct(n.c,s.total)}
   const status=!s.finished?'<span class="tag">Paused</span>':s.stopped?'<span class="tag stop">Stopped</span>':'';
-  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}${status}</div><div class="meta">${dateLabel(s.date)} · Solo${s.stopped||!s.finished?` · ${n.answered} of ${s.total} answered`:''}</div></div><div class="history-score">${score}<small>${label}</small></div></div>${!s.finished||safeUrl(s.videoUrl)?`<div class="card-actions">${videoButtonHtml(s.videoUrl)}${!s.finished?`<button class="secondary" data-resume="${s.id}">Resume</button>`:''}</div>`:''}<div class="card-foot"><button class="danger-link" data-remove-solo="${escapeHtml(s.id)}">Remove from history</button></div></div>`;
+  return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(s.name)}${status}</div><div class="meta">${dateLabel(s.date)} · Solo${s.stopped||!s.finished?` · ${n.answered} of ${s.total} answered`:''}</div></div><div class="history-score">${score}<small>${label}</small></div></div>${!s.finished||safeUrl(s.videoUrl)?`<div class="card-actions">${videoButtonHtml(s.videoUrl)}${!s.finished?`<button class="secondary" data-resume="${s.id}">Resume</button>${n.answered?`<button class="secondary" data-stop-solo="${s.id}">Stop &amp; save score</button>`:''}`:''}</div>`:''}<div class="card-foot"><button class="remove-link" data-remove-solo="${escapeHtml(s.id)}" aria-label="Remove ${escapeHtml(s.name)} from history">Remove</button></div></div>`;
 }
 function sharedCard({s,game,players:ps,mine}){
   const answered=Number(mine.answered||0),correct=Number(mine.correct||0),total=Number(game.total_questions||0);
@@ -621,11 +636,11 @@ function sharedCard({s,game,players:ps,mine}){
   return `<div class="video-card"><div class="history-row"><div style="min-width:0"><div class="video-title">${escapeHtml(game.video_title)}${status}</div><div class="meta">${new Date(game.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})} · Shared · ${ps.length} player${ps.length===1?'':'s'}</div></div><div class="history-score">${correct} / ${done?total:answered}<small>${done?pct(correct,total):`${answered} of ${total} answered`}</small></div></div>
     <div class="card-actions">${videoButtonHtml(game.video_url||s.video_url)}<button class="secondary" data-toggle-scores="${key}">See everyone's scores</button>${!stopped&&!done?`<button class="secondary" data-resume-shared="${key}">Resume</button>`:''}</div>
     <div class="players-box" data-scores-for="${key}" hidden>${scoreboardHtml(game,ps,s.player_id)}</div>
-    <div class="card-foot"><button class="danger-link" data-remove-shared="${key}">Remove from history</button>${isCreator?`<button class="danger-link" data-delete-shared="${key}">Delete game for everyone</button>`:''}</div></div>`;
+    <div class="card-foot"><button class="remove-link" data-remove-shared="${key}" aria-label="Remove ${escapeHtml(game.video_title)} from history">Remove</button>${isCreator?`<button class="danger-link" data-delete-shared="${key}" aria-label="Delete ${escapeHtml(game.video_title)} for everyone">Delete game for everyone</button>`:''}</div></div>`;
 }
 // A shared game that couldn't be loaded (deleted by its creator, or no connection): still show it so it can be removed
 function missingSharedCard(s){
-  return `<div class="video-card"><div class="video-title">${escapeHtml(s.video_title||'Shared game')}<span class="tag">Unavailable</span></div><div class="meta">Shared · couldn't load this game. It may have been deleted.</div><div class="card-foot"><button class="danger-link" data-remove-shared="${escapeHtml(s.player_token)}">Remove from history</button></div></div>`;
+  return `<div class="video-card"><div class="video-title">${escapeHtml(s.video_title||'Shared game')}<span class="tag">Unavailable</span></div><div class="meta">Shared · couldn't load this game. It may have been deleted.</div><div class="card-foot"><button class="remove-link" data-remove-shared="${escapeHtml(s.player_token)}" aria-label="Remove ${escapeHtml(s.video_title||'this shared game')} from history">Remove</button></div></div>`;
 }
 // Remove one game from your history (asks first). Returns true if removed.
 function removeSolo(id,text){
@@ -655,12 +670,14 @@ async function removeShared(token){
 function soloTime(s){return Date.parse(s.completedAt||'')||Number(s.id)||Date.parse(s.date)}
 async function renderHistory(){
   const el=$('historyList');
-  const soloOnly=sessions.map(s=>({t:soloTime(s),html:soloCard(s)}));
+  const soloOnly=sessions.map(s=>({t:soloTime(s),open:!s.finished,html:soloCard(s)}));
   el.innerHTML=soloOnly.length||shared.length?'<div class="empty">Loading games…</div>':'<div class="empty">Your games will appear here.</div>';
   const all=shared.length?await fetchSharedGames():[],games=all.filter(g=>!g.missing);
-  const items=[...soloOnly,...all.map(g=>({t:(g.game&&Date.parse(g.game.created_at))||Date.parse(g.s.joined_at||'')||0,html:g.missing?missingSharedCard(g.s):sharedCard(g)}))].sort((a,b)=>b.t-a.t);
+  const items=[...soloOnly,...all.map(g=>({t:(g.game&&Date.parse(g.game.created_at))||Date.parse(g.s.joined_at||'')||0,open:!g.missing&&!g.s.stopped&&!playerStopped(g.mine)&&Number(g.mine.answered||0)<Number(g.game.total_questions||0),html:g.missing?missingSharedCard(g.s):sharedCard(g)}))].sort((a,b)=>b.t-a.t);
   $('historyCount').textContent=items.length+' game'+(items.length===1?'':'s');
-  el.innerHTML=items.length?items.map(i=>i.html).join(''):'<div class="empty">Your games will appear here.</div>';
+  const open=items.filter(i=>i.open),done=items.filter(i=>!i.open);
+  el.innerHTML=!items.length?'<div class="empty">Your games will appear here.</div>'
+    :(open.length?`<h3 class="group-title">Unfinished <small>${open.length}</small></h3>${open.map(i=>i.html).join('')}${done.length?'<h3 class="group-title">Finished</h3>':''}`:'')+done.map(i=>i.html).join('');
   renderLifetime(games);
 }
 function renderLifetime(games){
@@ -679,6 +696,9 @@ $('historyList').onclick=async e=>{
   const rs=e.target.closest('[data-resume-shared]');if(rs){const g=shared.find(x=>x.player_token===rs.dataset.resumeShared);if(g)enterShared(g);return}
   const t=e.target.closest('[data-toggle-scores]');
   if(t){const box=[...document.querySelectorAll('[data-scores-for]')].find(b=>b.dataset.scoresFor===t.dataset.toggleScores);if(box){box.hidden=!box.hidden;t.textContent=box.hidden?"See everyone's scores":'Hide scores'}return}
+  const st=e.target.closest('[data-stop-solo]');if(st){const s=sessions.find(x=>x.id===st.dataset.stopSolo);if(!s)return;
+    s.finished=true;s.stopped=true;s.completedAt=new Date().toISOString();touch(s);save(KEY,sessions);renderHistory();
+    removeWithUndo(`Score saved: ${counts(s).c} of ${counts(s).answered} correct`,'s:'+s.id,()=>{s.finished=false;s.stopped=false;delete s.completedAt;touch(s);save(KEY,sessions);rerender()},()=>backupSoon());return}
   const rm=e.target.closest('[data-remove-solo]');if(rm){if(removeSolo(rm.dataset.removeSolo))renderHistory();return}
   const rms=e.target.closest('[data-remove-shared]');if(rms){rms.disabled=true;if(await removeShared(rms.dataset.removeShared))renderHistory();else rms.disabled=false;return}
   const b=e.target.closest('[data-delete-shared]');if(!b)return;
@@ -708,7 +728,7 @@ function rememberPlayers(ps,myId,when){
 function daysAgo(t){const d=Math.floor((Date.now()-t)/DAY);return d<=0?'today':d===1?'yesterday':d+' days ago'}
 function renderPlayers(){
   pruneRecent();const el=$('savedPlayers');
-  el.innerHTML=recent.length?recent.map((p,i)=>`<div class="video-card"><div class="history-row"><div><div class="video-title">${escapeHtml(p.name)}</div><div class="meta">Last played ${daysAgo(p.last)}</div></div><button class="muted-btn" data-remove-player="${i}">Remove</button></div></div>`).join(''):'<div class="empty" style="padding:8px">No recent players yet. Play a shared game and the people you play with will show up here.</div>';
+  el.innerHTML=recent.length?recent.map((p,i)=>`<div class="video-card"><div class="history-row"><div><div class="video-title">${escapeHtml(p.name)}</div><div class="meta">Last played ${daysAgo(p.last)}</div></div><button class="muted-btn" data-remove-player="${i}" aria-label="Remove ${escapeHtml(p.name)}">Remove</button></div></div>`).join(''):'<div class="empty" style="padding:8px">No recent players yet. Play a shared game and the people you play with will show up here.</div>';
 }
 $('savedPlayers').onclick=e=>{const b=e.target.closest('[data-remove-player]');if(!b)return;
   const i=Number(b.dataset.removePlayer),p=recent[i];if(!p)return;const key='r:'+p.name.toLowerCase()+'@'+p.last;
@@ -843,7 +863,7 @@ document.querySelectorAll('[data-change-name]').forEach(b=>b.onclick=()=>{const 
 $('backupLine').onclick=()=>$('meBtn').click();
 $('meBtn').onclick=()=>{$('meName').value=myName();renderBackup();openDialog('meDialog')};
 $('meClose').onclick=()=>closeDialog('meDialog');
-$('meForm').onsubmit=e=>{e.preventDefault();const n=$('meName').value.trim();if(!n){formError('meError','Type a name first.');return}formError('meError');setMyName(n);backupSoon();closeDialog('meDialog')};
+$('meForm').onsubmit=e=>{e.preventDefault();const n=$('meName').value.trim();if(!n){formError('meError','Type a name first.','meName');return}formError('meError');setMyName(n);backupSoon();closeDialog('meDialog')};
 window.addEventListener('online',()=>{if(dirty)scheduleBackup()});
 // When you come back to the app, pick up games played on your other devices
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&syncCode&&(!lastBackup||Date.now()-lastBackup>30000))syncNow()});
@@ -884,18 +904,18 @@ $('pasteUrl').onclick=async()=>{
   catch{$('videoUrl').focus();$('urlStatus').textContent='Tap and hold in the box, then tap Paste.'}
 };
 function resetStartForm(){['videoUrl','videoName','questionCount'].forEach(id=>$(id).value='');$('urlStatus').textContent='';autoName='';$('playMode').value='solo';$('playerNameField').style.display='none'}
-$('startBtn').onclick=()=>{renderName();openDialog('startDialog');$('videoUrl').focus()};$('cancelStart').onclick=()=>closeDialog('startDialog');
+$('startBtn').onclick=()=>{renderName();openDialog('startDialog')};$('cancelStart').onclick=()=>closeDialog('startDialog');
 $('playMode').onchange=()=>$('playerNameField').style.display=$('playMode').value==='shared'?'block':'none';
 $('startForm').onsubmit=async e=>{
   e.preventDefault();
   const name=$('videoName').value.trim(),total=Number($('questionCount').value),mode=$('playMode').value;
   const rawUrl=$('videoUrl').value.trim(),videoUrl=safeUrl(rawUrl);
   formError('startError');
-  if(rawUrl&&!videoUrl){formError('startError',"That video link doesn't look right. It should start with https://");return}
-  if(!name){formError('startError','Type the video name, or paste a YouTube link to fill it in.');$('videoName').focus();return}
-  if(!Number.isInteger(total)||total<1||total>500){formError('startError','Enter how many questions the video has (1 to 500).');$('questionCount').focus();return}
+  if(rawUrl&&!videoUrl){formError('startError',"That video link doesn't look right. It should start with https://",'videoUrl');return}
+  if(!name){formError('startError','Type the video name, or paste a YouTube link to fill it in.','videoName');$('videoName').focus();return}
+  if(!Number.isInteger(total)||total<1||total>500){formError('startError','Enter how many questions the video has (1 to 500).','questionCount');$('questionCount').focus();return}
   if(mode==='shared'){
-    const pn=$('hostName').value.trim();if(!pn){$('hostName').hidden=false;$('hostNameShow').hidden=true;formError('startError','Type your player name so the others know who you are.');$('hostName').focus();return}
+    const pn=$('hostName').value.trim();if(!pn){$('hostName').hidden=false;$('hostNameShow').hidden=true;formError('startError','Type your player name so the others know who you are.','hostName');$('hostName').focus();return}
     $('startSubmit').disabled=true;
     try{closeDialog('startDialog');await createShared(name,total,pn,videoUrl);resetStartForm()}catch(err){formError('startError',"Couldn't start the shared game. "+friendlyError(err));openDialog('startDialog')}
     finally{$('startSubmit').disabled=false}
@@ -908,8 +928,8 @@ $('startForm').onsubmit=async e=>{
 };
 $('joinBtn').onclick=()=>{renderName();openDialog('joinDialog')};$('cancelJoin').onclick=()=>closeDialog('joinDialog');
 $('joinForm').onsubmit=async e=>{e.preventDefault();formError('joinError');
-  if(!$('inviteCode').value.trim()){formError('joinError','Paste the invitation link or code you were sent.');$('inviteCode').focus();return}
-  if(!$('joinName').value.trim()){$('joinName').hidden=false;$('joinNameShow').hidden=true;formError('joinError','Type your name so the others know who you are.');$('joinName').focus();return}
+  if(!$('inviteCode').value.trim()){formError('joinError','Paste the invitation link or code you were sent.','inviteCode');$('inviteCode').focus();return}
+  if(!$('joinName').value.trim()){$('joinName').hidden=false;$('joinNameShow').hidden=true;formError('joinError','Type your name so the others know who you are.','joinName');$('joinName').focus();return}
   const raw=$('inviteCode').value.trim(),m=raw.match(/invite=([^&#\s]+)/),code=m?decodeURIComponent(m[1]):raw;
   try{$('cancelJoin').disabled=$('joinSubmit').disabled=true;await joinShared(code,$('joinName').value.trim());closeDialog('joinDialog')}
   catch(err){formError('joinError',"Couldn't join. "+friendlyError(err))}finally{$('cancelJoin').disabled=$('joinSubmit').disabled=false}};

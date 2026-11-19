@@ -1,11 +1,11 @@
 {
- "name":"Trivia Tracker — Personal Scorebook",
- "short_name":"Trivia Tracker",
+ "name":"Think Tank — Make Your Mark. Know Your Score.",
+ "short_name":"Think Tank",
  "description":"Track your personal scores while watching trivia videos.",
  "start_url":"./index.html",
  "display":"standalone",
  "background_color":"#0c111b",
- "theme_color":"#111827",
+ "theme_color":"#4338ca",
  "orientation":"portrait",
  "icons":[
   {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},

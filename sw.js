@@ -3,7 +3,7 @@
 // the saved copy is only used when there is no connection.
 // Other files (icons, manifest) come from the saved copy first.
 // Bump CACHE when you change icons or other files so phones pick up the new versions.
-const CACHE = 'trivia-tracker-v5';
+const CACHE = 'trivia-tracker-v7';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', e => e.waitUntil(

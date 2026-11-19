@@ -94,7 +94,9 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .toast[hidden]{display:none}.toast.plain button{display:none}
 .form-error{color:var(--danger-text);font-size:14px;font-weight:600;margin:0 0 12px}.form-error:empty{display:none}.toast button{background:transparent;color:var(--toast-action);font-weight:800;padding:10px 14px;min-height:44px;border-radius:12px}
 .scoreline{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.scoreline:last-child{border:0}
-.notice{color:var(--info-text);background:var(--info-bg);padding:12px;border-radius:12px;font-size:13px;margin:12px 0}
+.notice{color:var(--info-text);background:var(--info-bg);padding:12px;border-radius:12px;font-size:14px;margin:12px 0}.notice:empty{display:none}
+.play-title{margin:0 0 4px;font-size:18px;overflow-wrap:anywhere;text-wrap:balance}
+.board-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px}.board-head h3{margin:0;font-size:16px}.board-head .meta{margin:0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{background:var(--info-bg);color:var(--info-text);border:1px solid var(--info-line);border-radius:99px;padding:8px 14px;font-weight:700;font-size:14px}
 .invite-label{color:var(--muted);font-size:13px;margin-top:14px}
 .video-link{display:inline-block;color:var(--blue);font-weight:700;font-size:14px;text-decoration:none;margin-top:6px}
@@ -121,13 +123,13 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
 </section>
 
 <!-- SOLO GAME -->
-<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><div class="eyebrow" id="playTitle">VIDEO</div><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn">■ &nbsp;Stop game</button></div></section>
+<section id="play" class="screen"><div class="topline"><button class="back" id="exitPlay">‹ Home</button><span class="pill">IN PROGRESS</span></div><div class="panel"><h2 class="play-title" id="playTitle">Game</h2><div id="playVideo"></div><div class="big-number" id="qNumber">Question 1</div><div class="sub" id="qSub">of 10</div><div class="progress-track"><div class="progress-fill" id="progress"></div></div><div class="daily"><div class="stat"><strong id="playCorrect">0</strong><span>Correct</span></div><div class="stat"><strong id="playWrong">0</strong><span>Incorrect</span></div></div><div class="answer-grid"><button class="answer correct" id="correctBtn"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="wrongBtn"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="undoBtn">↶ Undo last answer</button><button class="stop-btn" id="stopBtn">■ &nbsp;Stop game</button></div></section>
 
 <!-- RESULTS (solo finish, or any stopped game) -->
 <section id="summary" class="screen"><div class="topline"><button class="back" id="summaryHome">‹ Home</button><span class="pill done" id="summaryPill">GAME COMPLETE</span></div><div class="panel"><h2 class="summary-title" id="summaryTitle">Results</h2><div class="summary-score" id="summaryScore" aria-live="polite">0 / 0</div><div class="summary-verdict"><span id="summaryPct">0%</span> · <span id="summaryVerdict"></span></div><div class="marks" id="summaryMarks" role="img"></div><div class="summary-note" id="summaryNote"></div><div class="summary-compare" id="summaryCompare"></div><button class="primary finish" id="anotherBtn">＋ &nbsp;Start Another Game</button><button class="secondary finish" id="summaryDone">Back to Home</button><div class="tip" id="backupTip" hidden>✓ Your games are backed up. Save your backup link so you can get them back if this browser is ever cleared.<div class="row" style="margin-top:10px"><button class="secondary" id="tipSave" style="flex:1">Save link</button><button class="muted-btn" id="tipLater" style="flex:1">Not now</button></div></div></div></section>
 
 <!-- SHARED GAME -->
-<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">SHARED GAME</span></div><div class="panel"><div class="eyebrow">SHARED TRIVIA GAME</div><h2 id="sharedTitle" style="margin:8px 0">Game</h2><div id="sharedVideo"></div><div class="sub" id="sharedProgress" style="text-align:left;margin-bottom:0">Question 1</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice">Your answers sync with the group.</div><div id="scoreboard"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="shareAgain">Share invitation link</button><div id="inviteRecent"></div><button class="stop-btn" id="sharedStopBtn">■ &nbsp;Stop game</button></div></section>
+<section id="shared" class="screen"><div class="topline"><button class="back" id="sharedHome">‹ Home</button><span class="pill" id="sharedStatus">LIVE</span></div><div class="panel"><h2 class="play-title" id="sharedTitle">Game</h2><div id="sharedVideo"></div><div class="big-number" id="sharedQ" aria-live="polite">Question 1</div><div class="sub" id="sharedQSub">of 10</div><div class="progress-track"><div class="progress-fill" id="sharedBar"></div></div><div class="notice" id="sharedNotice" role="status"></div><div class="answer-grid" id="sharedAnswerGrid" style="margin-top:16px"><button class="answer correct" id="sharedCorrect"><span class="symbol">✓</span>Correct</button><button class="answer wrong" id="sharedWrong"><span class="symbol">✕</span>Incorrect</button></div><button class="secondary finish" id="sharedFix" hidden>↶ Change last answer</button><button class="stop-btn" id="sharedStopBtn">■ &nbsp;Stop game</button></div><div class="panel"><div class="board-head"><h3>Scoreboard</h3><span class="meta" id="sharedProgress"></span></div><div id="scoreboard"></div><button class="secondary finish" id="shareAgain">Invite someone</button><div id="inviteRecent"></div></div></section>
 
 <!-- GAME HISTORY -->
 <section id="history" class="screen">
@@ -432,21 +434,23 @@ async function refreshShared(){
     const data=await rpc('get_trivia_game',{p_invite_code:activeShared.invite_code});
     const game=data.game,ps=data.players||[];
     $('sharedTitle').textContent=game.video_title;$('sharedVideo').innerHTML=videoLinkHtml(game.video_url||activeShared.video_url);
-    $('sharedProgress').textContent=`${ps.length} player${ps.length===1?'':'s'} · ${game.total_questions} questions each`;
+    $('sharedProgress').textContent=`${ps.length} player${ps.length===1?'':'s'}`;
     $('scoreboard').innerHTML=scoreboardHtml(game,ps,activeShared.player_id);
     rememberPlayers(ps,activeShared.player_id,Date.now());renderInviteChips(ps);
     const mine=ps.find(p=>p.player_id===activeShared.player_id);
     const answered=Number(mine?.answered||0),done=answered>=game.total_questions,stopped=activeShared.stopped||playerStopped(mine);
     $('sharedBar').style.width=Math.min(100,answered/game.total_questions*100)+'%';
-    $('sharedNotice').textContent=stopped?`You stopped this game after ${answered} questions. You can still watch the scoreboard.`:done?'You have answered every question. Waiting for the group — check the scoreboard.':`You are ${activeShared.display_name}. Your next answer is question ${answered+1}.`;
-    $('sharedAnswerGrid').style.display=stopped?'none':'';
-    $('sharedCorrect').disabled=$('sharedWrong').disabled=done||stopped||sharedBusy;
+    $('sharedQ').textContent=stopped?'Game stopped':done?'All done!':`Question ${answered+1}`;
+    $('sharedQSub').textContent=stopped?`You answered ${answered} of ${game.total_questions}`:done?`You answered all ${game.total_questions}`:`of ${game.total_questions}`;
+    $('sharedNotice').textContent=stopped?'You can still watch the scoreboard below.':done?'Waiting for the others. The scoreboard below updates by itself.':'';
+    $('sharedAnswerGrid').style.display=stopped||done?'none':'';
     $('sharedStopBtn').style.display=stopped||done?'none':'';
+    sharedServerAnswered=answered;updateSharedButtons();
     $('sharedStatus').textContent=stopped?'STOPPED':game.status==='completed'?'COMPLETED':'LIVE';
     activeShared.total_questions=game.total_questions;activeShared.video_title=game.video_title;save(SHARED_KEY,shared);
   }catch(e){$('sharedNotice').textContent=navigator.onLine===false?"You're offline. The scoreboard will update when you're back online.":"Can't reach the scoreboard right now. Trying again…"}
 }
-function enterShared(s){activeShared=s;$('scoreboard').innerHTML='';switchScreen('shared');refreshShared();clearInterval(pollTimer);pollTimer=setInterval(refreshShared,4000)}
+function enterShared(s){activeShared=s;sharedServerAnswered=-1;$('scoreboard').innerHTML='';switchScreen('shared');refreshShared();clearInterval(pollTimer);pollTimer=setInterval(refreshShared,4000)}
 function rememberShared(s){setMyName(s.display_name);shared.push(s);if(shared.length>25)shared=shared.slice(-25);save(SHARED_KEY,shared);backupSoon()}
 async function createShared(name,total,playerName,videoUrl){
   const args={p_video_title:name,p_total_questions:total,p_player_name:playerName};
@@ -461,8 +465,28 @@ async function joinShared(code,playerName){
   const s={game_id:data.game_id,invite_code:code,player_id:data.player_id,player_token:data.player_token,display_name:playerName,answers:[],joined_at:new Date().toISOString()};
   rememberShared(s);history.replaceState({},'',location.pathname);putCodeInAddressBar();enterShared(s);
 }
-let sharedBusy=false;
-function lockShared(on){sharedBusy=on;$('sharedAnswerGrid').setAttribute('aria-busy',on?'true':'false');if(on)$('sharedCorrect').disabled=$('sharedWrong').disabled=true}
+let sharedBusy=false,sharedServerAnswered=0;
+function lockShared(on){sharedBusy=on;$('sharedAnswerGrid').setAttribute('aria-busy',on?'true':'false');updateSharedButtons()}
+function updateSharedButtons(){
+  const s=activeShared;if(!s)return;const a=s.answers||[],total=s.total_questions||Infinity;
+  const done=a.length>=total,stopped=!!s.stopped;
+  $('sharedCorrect').disabled=$('sharedWrong').disabled=sharedBusy||done||stopped;
+  // Only offer a change when this phone's list matches what the game has (not answered elsewhere)
+  const canFix=!stopped&&a.length>0&&a.length===sharedServerAnswered;
+  $('sharedFix').hidden=!canFix;$('sharedFix').disabled=sharedBusy;
+  if(canFix)$('sharedFix').textContent=`↶ Change question ${a.length} to ${a.at(-1)==='c'?'Incorrect':'Correct'}`;
+}
+async function fixLastShared(){
+  const s=activeShared;if(!s||sharedBusy||!(s.answers||[]).length)return;
+  const q=s.answers.length,nowCorrect=s.answers[q-1]!=='c';
+  lockShared(true);
+  try{
+    await rpc('record_trivia_answer',{p_player_token:s.player_token,p_question_number:q,p_is_correct:nowCorrect});
+    s.answers[q-1]=nowCorrect?'c':'w';touch(s);save(SHARED_KEY,shared);
+    notify(`Question ${q} changed to ${nowCorrect?'Correct':'Incorrect'}.`);
+  }catch(e){notify("Couldn't change your answer. "+friendlyError(e))}
+  finally{lockShared(false);refreshShared()}
+}
 async function sharedAnswer(correct){
   if(!activeShared||activeShared.stopped||sharedBusy)return;
   lockShared(true);
@@ -470,7 +494,7 @@ async function sharedAnswer(correct){
     await rpc('record_trivia_answer',{p_player_token:activeShared.player_token,p_question_number:(activeShared.answers||[]).length+1,p_is_correct:correct});
     activeShared.answers=activeShared.answers||[];activeShared.answers.push(correct?'c':'w');touch(activeShared);save(SHARED_KEY,shared);if(activeShared.answers.length>=(activeShared.total_questions||Infinity))backupSoon();await refreshShared();
   }catch(e){notify("Your answer didn't save. "+friendlyError(e))}
-  finally{lockShared(false);const s=activeShared;if(s)$("sharedCorrect").disabled=$("sharedWrong").disabled=!!s.stopped||(s.answers||[]).length>=(s.total_questions||Infinity)}
+  finally{lockShared(false)}
 }
 // Tell the database this player stopped. Returns false if that database function hasn't been added yet.
 async function stopOnServer(token,keep){
@@ -493,7 +517,7 @@ $('sharedStopBtn').onclick=()=>{
       if(!removedOnline&&n.answered)notify('Removed from this phone. The other players can still see your score.');
     });
 };
-$('sharedCorrect').onclick=()=>sharedAnswer(true);$('sharedWrong').onclick=()=>sharedAnswer(false);
+$('sharedFix').onclick=fixLastShared;$('sharedCorrect').onclick=()=>sharedAnswer(true);$('sharedWrong').onclick=()=>sharedAnswer(false);
 $('shareAgain').onclick=shareInvite;$('sharedHome').onclick=goHome;
 
 // ---------- Game history ----------

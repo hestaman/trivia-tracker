@@ -94,7 +94,10 @@ button,input,select{font:inherit}button{border:0;cursor:pointer;color:inherit}bu
 .card-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;margin-top:6px}.card-foot .danger-link{padding:8px 0 0;font-size:14px}
 .card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.card-actions .secondary{flex:1;padding:10px;font-size:14px}
 .players-box{margin-top:10px;border-top:1px solid var(--line);padding-top:4px}
-.navfoot{text-align:center;color:var(--muted);font-size:12px;padding:15px 0}
+.navfoot{text-align:center;padding:8px 0 15px}
+.backup-line{background:transparent;color:var(--muted);font-size:13px;font-weight:600;padding:12px 14px;min-height:44px;border-radius:12px}.backup-line.ok{color:var(--ok-text)}.backup-line.err{color:var(--warn-text)}
+.sheet:focus{outline:none}
+.backup-line u{text-underline-offset:3px;color:var(--soft)}
 .danger-link{background:transparent;color:var(--danger-text);padding:10px}
 .discard-link{margin-top:6px;font-weight:700;min-height:44px}
 .toast{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:20;max-width:520px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--text);color:var(--bg);border-radius:16px;padding:10px 10px 10px 18px;box-shadow:0 10px 30px var(--shadow);font-weight:600}
@@ -187,14 +190,14 @@ a.secondary{text-decoration:none;text-align:center;color:inherit}
   </div>
 </section>
 
-<footer class="navfoot">Scores are backed up online when each game ends.</footer></main>
+<footer class="navfoot"><button class="backup-line" id="backupLine">Backup starts after your first game</button></footer></main>
 
 <div class="dialog" id="startDialog"><div class="sheet"><h2>Start a new game</h2><p>Paste the video's link if you have it. The name fills in by itself for YouTube videos.</p><form id="startForm" novalidate><div class="form-field"><label for="videoUrl">Video link <span class="meta" style="font-weight:400">(optional)</span></label><div class="row"><input id="videoUrl" type="url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" maxlength="500" style="flex:1;min-width:0"><button type="button" class="secondary" id="pasteUrl">Paste</button></div><div class="meta" id="urlStatus"></div></div><div class="form-field"><label for="videoName">Video name</label><input id="videoName" placeholder="e.g. 100 General Knowledge Questions" required maxlength="120"></div><div class="form-field"><label for="questionCount">Number of questions</label><input id="questionCount" type="number" min="1" max="500" placeholder="e.g. 20" required></div><div class="form-field"><label for="playMode">Play mode</label><select id="playMode"><option value="solo">Just me (Solo)</option><option value="shared">Play together (Shared)</option></select></div><div class="form-field" id="playerNameField" style="display:none"><label for="hostName">Your player name</label><div class="name-show" id="hostNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="hostName">Change</button></div><input id="hostName" maxlength="40" placeholder="e.g. Doug"></div><p class="form-error" id="startError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelStart" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="startSubmit">Start</button></div></form></div></div>
 <div class="dialog" id="joinDialog"><div class="sheet"><h2>Join a shared game</h2><p>Paste the invitation code or open the invitation link you received.</p><form id="joinForm" novalidate><div class="form-field"><label for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" required></div><div class="form-field"><label for="joinName">Your player name</label><div class="name-show" id="joinNameShow" hidden>Playing as <b data-my-name></b> <button type="button" class="link-btn" data-change-name="joinName">Change</button></div><input id="joinName" maxlength="40" placeholder="e.g. Jolene" required></div><p class="form-error" id="joinError" role="alert"></p><div class="row"><button type="button" class="secondary" id="cancelJoin" style="flex:1">Cancel</button><button class="primary" style="flex:1" type="submit" id="joinSubmit">Join game</button></div></form></div></div>
 <div class="dialog" id="confirmDialog"><div class="sheet"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="row"><button class="secondary" id="confirmCancel" style="flex:1">Cancel</button><button class="danger" id="confirmOk" style="flex:1"></button></div></div></div>
 <div class="dialog" id="meDialog"><div class="sheet me-sheet">
-  <div class="sheet-head"><h2>You</h2><button class="link-btn head-done" id="meClose">Done</button></div>
-  <form id="meForm"><div class="form-field" style="margin-top:10px"><label for="meName">Your player name</label><div class="row"><input id="meName" maxlength="40" placeholder="e.g. Doug" style="flex:1;min-width:0"><button class="secondary" type="submit">Save</button></div><div class="meta">This is the name other players see. Changing it doesn't change your scores.</div><p class="form-error" id="meError" role="alert"></p></div></form>
+  <div class="sheet-head"><h2>Your name &amp; backup</h2><button class="link-btn head-done" id="meClose">Done</button></div>
+  <form id="meForm"><div class="form-field" style="margin-top:10px"><label for="meName">Your player name</label><div class="row"><input id="meName" maxlength="40" placeholder="e.g. Doug" style="flex:1;min-width:0"><button class="secondary" type="submit">Save name</button></div><div class="meta">This is the name other players see. Changing it doesn't change your scores.</div><p class="form-error" id="meError" role="alert"></p></div></form>
   <div class="sub-title">Backup</div>
   <div class="sync-status" id="syncStatus"></div>
   <div id="syncHasLink" hidden>
@@ -245,7 +248,7 @@ function focusables(el){return [...el.querySelectorAll('button,input,select,a[hr
 function openDialog(id){
   const d=$(id);if(d.classList.contains('open'))return;
   lastFocus[id]=document.activeElement;d.classList.add('open');document.querySelector('main').inert=true;
-  setTimeout(()=>{if(!d.contains(document.activeElement)){const f=focusables(d.querySelector('.sheet'));(f.find(x=>x.matches('input:not([readonly]),select'))||f[0])?.focus({preventScroll:true})}},30);
+  setTimeout(()=>{if(id==='meDialog'){const s=d.querySelector('.sheet');s.tabIndex=-1;s.focus({preventScroll:true});return}if(!d.contains(document.activeElement)){const f=focusables(d.querySelector('.sheet'));(f.find(x=>x.matches('input:not([readonly]),select'))||f[0])?.focus({preventScroll:true})}},30);
 }
 function closeDialog(id){
   const d=$(id);if(!d.classList.contains('open'))return;
@@ -763,6 +766,13 @@ function renderSyncStatus(){
   else if(syncCode){text='✓ Backup is on. Games save online when each one ends.';cls+=' ok'}
   else text="Backup starts by itself after your first game.";
   el.textContent=text;el.className=cls;
+  const line=$('backupLine');if(!line)return;
+  const time=lastBackup?lastBackup.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}):'';
+  line.className='backup-line'+(syncError?' err':syncCode?' ok':'');
+  line.innerHTML=!syncCode?'Backup starts after your first game'
+    :syncError?(syncError==='offline'?"Offline. Games will back up when you're connected":"Backup didn't go through. <u>See why</u>")
+    :syncBusy?'Backing up…'
+    :(time?`✓ Backed up at ${time}`:'✓ Backup is on')+' · <u>Backup link</u>';
 }
 function renderBackup(){$('syncHasLink').hidden=!syncCode;renderSyncStatus()}
 // Briefly show a result on the button itself, in place of a pop-up
@@ -804,6 +814,7 @@ function renderName(){
   for(const id of ['hostName','joinName']){$(id).value=n;$(id).hidden=!!n;$(id+'Show').hidden=!n}
 }
 document.querySelectorAll('[data-change-name]').forEach(b=>b.onclick=()=>{const id=b.dataset.changeName;$(id+'Show').hidden=true;$(id).hidden=false;$(id).focus();$(id).select()});
+$('backupLine').onclick=()=>$('meBtn').click();
 $('meBtn').onclick=()=>{$('meName').value=myName();renderBackup();openDialog('meDialog')};
 $('meClose').onclick=()=>closeDialog('meDialog');
 $('meForm').onsubmit=e=>{e.preventDefault();const n=$('meName').value.trim();if(!n){formError('meError','Type a name first.');return}formError('meError');setMyName(n);backupSoon();closeDialog('meDialog')};
